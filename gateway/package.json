@@ -1,0 +1,23 @@
+{
+  "name": "gateway",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "node --test \"telegram-channel/**/*.test.ts\"",
+    "start": "node src/main.ts"
+  },
+  "dependencies": {
+    "@shutter-network/concorde": "file:vendor/shutter-network-concorde-0.1.0.tgz",
+    "drizzle-orm": "^0.45.2",
+    "fastify": "^5.12.5"
+  },
+  "devDependencies": {
+    "@types/node": "^24.13.3",
+    "drizzle-kit": "^0.31.10",
+    "typescript": "^7.0.2"
+  }
+}

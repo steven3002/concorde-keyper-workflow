@@ -1,0 +1,28 @@
+services:
+  postgres:
+    image: ${POSTGRES_IMAGE}
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 1s
+      timeout: 2s
+      retries: 20
+
+  channel-tests:
+    build:
+      context: ../../gateway
+      dockerfile: Dockerfile
+      target: channel-tests
+      args:
+        NODE_IMAGE: ${NODE_IMAGE}
+        CONCORDE_REPO: ${CONCORDE_REPO}
+        CONCORDE_SHA: ${CONCORDE_SHA}
+        KEYPER_AGENT_REPO: ${KEYPER_AGENT_REPO}
+        KEYPER_AGENT_SHA: ${KEYPER_AGENT_SHA}
+    environment:
+      DATABASE_URL: postgres://postgres:postgres@postgres:5432/postgres
+    depends_on:
+      postgres:
+        condition: service_healthy

@@ -1,1 +1,12 @@
 dtl1
+# Runtime environment file containing live credentials
+.env
+
+# Persistent state directories
+state/
+
+# Dependencies and build artifacts
+node_modules/
+dist/
+*.tgz
+vendor/*.tgz
