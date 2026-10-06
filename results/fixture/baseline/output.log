@@ -1,0 +1,225 @@
+=== Run started at 2026-10-06T19:58:06Z for baseline ===
+=== Starting baseline deployment check (s2) ===
+ Image concorde-s2-baseline-migrate Building 
+ Image concorde-s2-baseline-gateway Building 
+ Image concorde-s2-baseline-agent Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 2.67kB done
+#1 DONE 0.0s
+
+#2 [gateway internal] load build definition from Dockerfile
+#2 transferring dockerfile: 2.50kB done
+#2 WARN: InvalidDefaultArgInFrom: Default value for ARG ${NODE_IMAGE} results in empty or invalid base image name (line 8)
+#2 WARN: InvalidDefaultArgInFrom: Default value for ARG ${NODE_IMAGE} results in empty or invalid base image name (line 27)
+#2 WARN: InvalidDefaultArgInFrom: Default value for ARG ${NODE_IMAGE} results in empty or invalid base image name (line 45)
+#2 WARN: InvalidDefaultArgInFrom: Default value for ARG ${NODE_IMAGE} results in empty or invalid base image name (line 52)
+#2 WARN: InvalidDefaultArgInFrom: Default value for ARG ${NODE_IMAGE} results in empty or invalid base image name (line 64)
+#2 WARN: InvalidDefaultArgInFrom: Default value for ARG ${NODE_IMAGE} results in empty or invalid base image name (line 8)
+#2 WARN: InvalidDefaultArgInFrom: Default value for ARG ${NODE_IMAGE} results in empty or invalid base image name (line 27)
+#2 WARN: InvalidDefaultArgInFrom: Default value for ARG ${NODE_IMAGE} results in empty or invalid base image name (line 45)
+#2 WARN: InvalidDefaultArgInFrom: Default value for ARG ${NODE_IMAGE} results in empty or invalid base image name (line 52)
+#2 WARN: InvalidDefaultArgInFrom: Default value for ARG ${NODE_IMAGE} results in empty or invalid base image name (line 64)
+#2 DONE 0.0s
+
+#3 [agent internal] load build definition from Dockerfile
+#3 transferring dockerfile: 271B done
+#3 WARN: InvalidDefaultArgInFrom: Default value for ARG ${NODE_IMAGE} results in empty or invalid base image name (line 4)
+#3 DONE 0.0s
+
+#4 [migrate internal] load metadata for docker.io/library/node:24-alpine@sha256:ebfe2f90462722a7a4de65e91990e97fe0d401c70e0e762c5b53302f905ec1c1
+#4 DONE 0.1s
+
+#5 [agent internal] load .dockerignore
+#5 transferring context: 2B done
+#5 DONE 0.0s
+
+#6 [gateway internal] load .dockerignore
+#6 transferring context: 2B done
+#6 DONE 0.0s
+
+#7 [migrate internal] load build context
+#7 transferring context: 361B done
+#7 DONE 0.0s
+
+#8 [gateway 1/4] FROM docker.io/library/node:24-alpine@sha256:ebfe2f90462722a7a4de65e91990e97fe0d401c70e0e762c5b53302f905ec1c1
+#8 resolve docker.io/library/node:24-alpine@sha256:ebfe2f90462722a7a4de65e91990e97fe0d401c70e0e762c5b53302f905ec1c1 0.1s done
+#8 DONE 0.1s
+
+#9 [agent 2/4] RUN apk add --no-cache curl socat
+#9 CACHED
+
+#10 [agent 3/4] RUN npm install -g @earendil-works/pi-coding-agent@0.85.1
+#10 CACHED
+
+#11 [agent 4/4] WORKDIR /workspace
+#11 CACHED
+
+#12 [migrate deps 5/5] RUN npm install --no-audit --no-fund
+#12 CACHED
+
+#13 [migrate deps 4/5] COPY package*.json ./
+#13 CACHED
+
+#14 [migrate runtime 7/9] COPY drizzle.config*.ts ./
+#14 CACHED
+
+#15 [migrate deps 2/5] WORKDIR /app
+#15 CACHED
+
+#16 [migrate concorde 3/4] WORKDIR /build/concorde
+#16 CACHED
+
+#17 [migrate runtime 4/9] COPY --from=deps /app/vendor ./vendor
+#17 CACHED
+
+#18 [migrate runtime 6/9] COPY tsconfig*.json ./
+#18 CACHED
+
+#19 [migrate runtime 8/9] COPY --from=telegram-channel /out/telegram-channel ./telegram-channel
+#19 CACHED
+
+#20 [migrate deps 3/5] COPY --from=concorde /build/concorde/shutter-network-concorde-0.1.0.tgz ./vendor/shutter-network-concorde-0.1.0.tgz
+#20 CACHED
+
+#21 [migrate telegram-channel 4/4] RUN git init     && git remote add origin "https://github.com/shutter-network/keyper-concorde-agent.git"     && git fetch --depth 1 origin "f5a5c17e1f39570f84d953bb46dba0f35f15b3dc"     && git checkout FETCH_HEAD     && ACTUAL_SHA="$(git rev-parse HEAD)"     && if [ "${ACTUAL_SHA}" != "f5a5c17e1f39570f84d953bb46dba0f35f15b3dc" ]; then          echo "Commit mismatch for keyper agent: expected f5a5c17e1f39570f84d953bb46dba0f35f15b3dc, got ${ACTUAL_SHA}" >&2;          exit 1;        fi     && mkdir -p /out     && cp -r telegram-channel /out/
+#21 CACHED
+
+#22 [migrate runtime 3/9] COPY --from=deps /app/node_modules ./node_modules
+#22 CACHED
+
+#23 [migrate telegram-channel 3/4] WORKDIR /build/agent
+#23 CACHED
+
+#24 [migrate concorde 4/4] RUN git init     && git remote add origin "https://github.com/shutter-network/concorde.git"     && git fetch --depth 1 origin "03dda6a0b1a79077737342709f346bf463a94e20"     && git checkout FETCH_HEAD     && ACTUAL_SHA="$(git rev-parse HEAD)"     && if [ "${ACTUAL_SHA}" != "03dda6a0b1a79077737342709f346bf463a94e20" ]; then          echo "Commit mismatch for Concorde: expected 03dda6a0b1a79077737342709f346bf463a94e20, got ${ACTUAL_SHA}" >&2;          exit 1;        fi     && npm ci     && npm run build     && npm pack
+#24 CACHED
+
+#25 [migrate telegram-channel 2/4] RUN apk add --no-cache git
+#25 CACHED
+
+#26 [migrate runtime 5/9] COPY package*.json ./
+#26 CACHED
+
+#27 [migrate concorde 2/4] RUN apk add --no-cache git
+#27 CACHED
+
+#28 [migrate runtime 9/9] COPY src ./src
+#28 CACHED
+
+#29 [migrate] exporting to image
+#29 exporting layers
+#29 exporting layers done
+#29 exporting manifest sha256:901b6173280660b400b4cfb7f7dffdbfce88afe825b18643a602b8f230cd9580 0.0s done
+#29 exporting config sha256:4e8bbdc77cf71f43c905a674ca61a27235373f70dcd365a2f7d9623944ca0146 0.0s done
+#29 exporting attestation manifest sha256:c0c5de5b3e3793ca520dd48ba3935c22fe3592bb57d70bb46eeab0acb6576dad
+#29 exporting attestation manifest sha256:c0c5de5b3e3793ca520dd48ba3935c22fe3592bb57d70bb46eeab0acb6576dad 0.1s done
+#29 exporting manifest list sha256:d41274af31fb37e9bc5348a25c2ef68ad7cd12bacd2b76e38666e15aa03e5cd0 0.1s done
+#29 naming to docker.io/library/concorde-s2-baseline-migrate:latest
+#29 naming to docker.io/library/concorde-s2-baseline-migrate:latest 0.0s done
+#29 unpacking to docker.io/library/concorde-s2-baseline-migrate:latest 0.1s done
+#29 DONE 0.5s
+
+#30 [agent] exporting to image
+#30 exporting layers done
+#30 exporting manifest sha256:0b8994164f1599d8b74be7db15e9f770e46a953e6d09c55b2e0c71f04718aa1c done
+#30 exporting config sha256:d07cd8ef1368fd2a78fb9a0f64cc6b7a677cbc7b28e2c660289686a7321623b1 done
+#30 exporting attestation manifest sha256:22e0c0bd9463692acc53f6dedbdb45bca5739532ace99eb8cd109767779feb6d 0.1s done
+#30 exporting manifest list sha256:0f18d877a53400d2651c55083a70a8926f0ff0ab80f3d4ce19044f541aedeeb7 0.1s done
+#30 naming to docker.io/library/concorde-s2-baseline-agent:latest 0.0s done
+#30 unpacking to docker.io/library/concorde-s2-baseline-agent:latest 0.1s done
+#30 DONE 0.4s
+
+#31 [gateway] exporting to image
+#31 exporting layers 0.0s done
+#31 exporting manifest sha256:e7d26660d225e66dafe032f00882826f44edbac8d6670618e9e8d2bc7b04c8c8 0.0s done
+#31 exporting config sha256:e8f538a42f7befeca99e41fc1827fddda07f0764e02d6f0ca5b87d2f8086a95a 0.0s done
+#31 exporting attestation manifest sha256:1d766c7cccaabeeef6d98ddf6f2b4e96f3654ee59834474308d80c58b87680da 0.1s done
+#31 exporting manifest list sha256:c015483e6c227842c7101eb654412adc6c4906bfca3bee67b9883da7fd9c764a 0.1s done
+#31 naming to docker.io/library/concorde-s2-baseline-gateway:latest 0.0s done
+#31 unpacking to docker.io/library/concorde-s2-baseline-gateway:latest
+#31 unpacking to docker.io/library/concorde-s2-baseline-gateway:latest 0.1s done
+#31 DONE 0.5s
+
+#32 [agent] resolving provenance for metadata file
+#32 DONE 0.1s
+
+#33 [migrate] resolving provenance for metadata file
+#33 DONE 0.1s
+
+#34 [gateway] resolving provenance for metadata file
+#34 DONE 0.0s
+ Image concorde-s2-baseline-gateway Built 
+ Image concorde-s2-baseline-migrate Built 
+ Image concorde-s2-baseline-agent Built 
+ Container concorde-s2-baseline-postgres-1 Running 
+ Container concorde-s2-baseline-gateway-1 Running 
+ Container concorde-s2-baseline-agent-1 Running 
+ Container concorde-s2-baseline-bot-api-1 Running 
+ Container concorde-s2-baseline-postgres-1 Waiting 
+ Container concorde-s2-baseline-postgres-1 Healthy 
+ Container concorde-s2-baseline-migrate-1 Starting 
+ Container concorde-s2-baseline-migrate-1 Started 
+ Container concorde-s2-baseline-postgres-1 Waiting 
+ Container concorde-s2-baseline-migrate-1 Waiting 
+ Container concorde-s2-baseline-postgres-1 Healthy 
+ Container concorde-s2-baseline-migrate-1 Exited 
+Waiting for gateway to become healthy...
+Gateway is healthy
+[PASS] S2.1 Gateway health - Gateway reached healthy state on empty database
+Injecting update from seeded chat 100000001...
+{"ok":true,"update_id":20001}
+Waiting for failure notice to be sent back to chat 100000001...
+{
+  "ok": true,
+  "sent": [
+    {
+      "messageId": 1,
+      "chatId": "100000001",
+      "text": "I am unable to process your request at this time. Please try again later.",
+      "recordedAt": "2026-10-06T19:59:36.966Z"
+    }
+  ]
+}
+Sent messages recorded by bot-api double:
+{
+  "ok": true,
+  "sent": [
+    {
+      "messageId": 1,
+      "chatId": "100000001",
+      "text": "I am unable to process your request at this time. Please try again later.",
+      "recordedAt": "2026-10-06T19:59:36.966Z"
+    }
+  ]
+}
+Database verification:
+Inbound messages: 1, Outbound messages: 1, Runs: 1 (Failed: 1)
+[PASS] S2.2 Seeded message run and failure notice - Message produced Run, Run failed as intended, failure notice recorded
+Injecting update from unknown chat 888777666...
+{"ok":true,"update_id":20002}
+Waiting for response to unknown chat...
+{
+  "ok": true,
+  "sent": [
+    {
+      "messageId": 1,
+      "chatId": "100000001",
+      "text": "I am unable to process your request at this time. Please try again later.",
+      "recordedAt": "2026-10-06T19:59:36.966Z"
+    },
+    {
+      "messageId": 2,
+      "chatId": "888777666",
+      "text": "This chat is not registered with the agent. Its id is 888777666.",
+      "recordedAt": "2026-10-06T19:59:38.280Z"
+    }
+  ]
+}
+      "text": "This chat is not registered with the agent. Its id is 888777666.",
+[PASS] S2.3 Unknown chat rejection - Answered with chat id and stored nothing in message log
+Checking agent container environment...
+[PASS] S2.4 Agent environment secret isolation - Agent environment contains no Telegram token and no database URL
+Checking for Docker socket mounts across all containers...
+[PASS] S2.5 Docker socket confinement - No container mounts the Docker socket
+=== All baseline checks passed successfully ===
+Tearing down baseline test stack...
+=== Run ended with exit code 0 ===

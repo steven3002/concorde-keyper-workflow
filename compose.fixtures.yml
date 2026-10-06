@@ -1,0 +1,13 @@
+services:
+  bot-api:
+    image: ${NODE_IMAGE}
+    working_dir: /app
+    command: ["node", "doubles/bot-api/server.ts"]
+    volumes:
+      - ./doubles/bot-api:/app/doubles/bot-api:ro
+    networks:
+      - egress
+
+networks:
+  egress:
+    internal: true

@@ -55,8 +55,9 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY --from=deps /app/vendor ./vendor
 COPY package*.json ./
 COPY tsconfig*.json ./
+COPY drizzle.config*.ts ./
 COPY --from=telegram-channel /out/telegram-channel ./telegram-channel
-COPY src* ./src/
+COPY src ./src
 CMD ["node", "src/main.ts"]
 
 # Stage 5: Target for running upstream Telegram channel test suite

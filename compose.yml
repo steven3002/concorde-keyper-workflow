@@ -1,0 +1,123 @@
+services:
+  postgres:
+    image: ${POSTGRES_IMAGE}
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - db
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 2s
+      timeout: 3s
+      retries: 20
+
+  migrate:
+    build:
+      context: ./gateway
+      dockerfile: Dockerfile
+      target: runtime
+      args:
+        NODE_IMAGE: ${NODE_IMAGE}
+        CONCORDE_REPO: ${CONCORDE_REPO}
+        CONCORDE_SHA: ${CONCORDE_SHA}
+        KEYPER_AGENT_REPO: ${KEYPER_AGENT_REPO}
+        KEYPER_AGENT_SHA: ${KEYPER_AGENT_SHA}
+    command: ["npx", "drizzle-kit", "push", "--force"]
+    environment:
+      DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+    networks:
+      - db
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: "no"
+
+  gateway:
+    build:
+      context: ./gateway
+      dockerfile: Dockerfile
+      target: runtime
+      args:
+        NODE_IMAGE: ${NODE_IMAGE}
+        CONCORDE_REPO: ${CONCORDE_REPO}
+        CONCORDE_SHA: ${CONCORDE_SHA}
+        KEYPER_AGENT_REPO: ${KEYPER_AGENT_REPO}
+        KEYPER_AGENT_SHA: ${KEYPER_AGENT_SHA}
+    environment:
+      DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN}
+      TELEGRAM_CHAT_ID: ${TELEGRAM_CHAT_ID}
+      TELEGRAM_API_BASE: ${TELEGRAM_API_BASE}
+      AGENT_INSTANCE_HOST: agent
+      AGENT_INSTANCE_PORT: "4000"
+      AGENT_SESSIONS_DIR: /sessions
+      AGENT_SERVER_HOST: 0.0.0.0
+      AGENT_SERVER_PORT: "7411"
+      PUBLIC_HOST: 127.0.0.1
+      PUBLIC_PORT: "8081"
+    networks:
+      - agent
+      - db
+      - egress
+    depends_on:
+      postgres:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+      agent:
+        condition: service_started
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:8081/openapi.json').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 3s
+      timeout: 3s
+      retries: 15
+      start_period: 5s
+
+  agent:
+    build:
+      context: ./agent
+      dockerfile: Dockerfile
+      args:
+        NODE_IMAGE: ${NODE_IMAGE}
+        PI_VERSION: ${PI_VERSION}
+    command:
+      - socat
+      - TCP-LISTEN:4000,reuseaddr,fork
+      - EXEC:pi --mode rpc --no-approve
+    environment:
+      AGENT_SERVER_URL: http://gateway:7411
+      METRICS_GATE_URL: http://metrics-gate:8080
+      PI_OFFLINE: "1"
+      PI_CODING_AGENT_DIR: /home/agent/.pi/agent
+    volumes:
+      - agent_workspace:/workspace
+      - agent_config:/home/agent/.pi/agent
+      - agent_sessions:/sessions
+      - ./agent/AGENTS.md:/workspace/AGENTS.md:ro
+    networks:
+      - agent
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    pids_limit: 512
+    mem_limit: 2g
+
+networks:
+  agent:
+    name: concorde_agent
+  db:
+    name: concorde_db
+    internal: true
+  egress:
+    name: concorde_egress
+
+volumes:
+  postgres_data:
+  agent_workspace:
+  agent_config:
+  agent_sessions:
