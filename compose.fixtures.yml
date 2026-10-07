@@ -17,6 +17,15 @@ services:
     networks:
       - egress
 
+  metrics-fixture:
+    image: ${NODE_IMAGE}
+    working_dir: /app
+    command: ["node", "doubles/metrics-fixture/server.ts"]
+    volumes:
+      - ./doubles/metrics-fixture:/app/doubles/metrics-fixture:ro
+    networks:
+      - egress
+
 networks:
   egress:
     internal: true

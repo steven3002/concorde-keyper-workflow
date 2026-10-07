@@ -1,50 +1,46 @@
-=== Run started at 2026-10-07T03:33:14Z for relay ===
-=== Starting model relay check (s3) ===
- Image concorde-s3-relay-gateway Building 
- Image concorde-s3-relay-migrate Building 
- Image concorde-s3-relay-agent Building 
+=== Run started at 2026-10-07T03:27:50Z for workflow ===
+=== Starting end-to-end workflow check (s4) ===
+Resetting and starting stack...
+ Image concorde-s4-workflow-agent Building 
+ Image concorde-s4-workflow-migrate Building 
+ Image concorde-s4-workflow-gateway Building 
 #1 [internal] load local bake definitions
-#1 reading from stdin 2.65kB done
+#1 reading from stdin 2.67kB done
 #1 DONE 0.0s
 
 #2 [migrate internal] load build definition from Dockerfile
-#2 transferring dockerfile:
-#2 transferring dockerfile: 2.50kB 0.0s done
+#2 transferring dockerfile: 2.50kB done
 #2 WARN: InvalidDefaultArgInFrom: Default value for ARG ${NODE_IMAGE} results in empty or invalid base image name (line 8)
 #2 WARN: InvalidDefaultArgInFrom: Default value for ARG ${NODE_IMAGE} results in empty or invalid base image name (line 27)
 #2 WARN: InvalidDefaultArgInFrom: Default value for ARG ${NODE_IMAGE} results in empty or invalid base image name (line 45)
 #2 WARN: InvalidDefaultArgInFrom: Default value for ARG ${NODE_IMAGE} results in empty or invalid base image name (line 52)
 #2 WARN: InvalidDefaultArgInFrom: Default value for ARG ${NODE_IMAGE} results in empty or invalid base image name (line 64)
-#2 WARN: InvalidDefaultArgInFrom: Default value for ARG ${NODE_IMAGE} results in empty or invalid base image name (line 8)
-#2 WARN: InvalidDefaultArgInFrom: Default value for ARG ${NODE_IMAGE} results in empty or invalid base image name (line 27)
-#2 WARN: InvalidDefaultArgInFrom: Default value for ARG ${NODE_IMAGE} results in empty or invalid base image name (line 45)
-#2 WARN: InvalidDefaultArgInFrom: Default value for ARG ${NODE_IMAGE} results in empty or invalid base image name (line 52)
-#2 WARN: InvalidDefaultArgInFrom: Default value for ARG ${NODE_IMAGE} results in empty or invalid base image name (line 64)
-#2 DONE 0.0s
+#2 DONE 0.1s
 
 #3 [agent internal] load build definition from Dockerfile
-#3 transferring dockerfile: 271B 0.0s done
+#3 transferring dockerfile: 271B done
 #3 WARN: InvalidDefaultArgInFrom: Default value for ARG ${NODE_IMAGE} results in empty or invalid base image name (line 4)
 #3 DONE 0.1s
 
-#4 [gateway internal] load metadata for docker.io/library/node:24-alpine@sha256:ebfe2f90462722a7a4de65e91990e97fe0d401c70e0e762c5b53302f905ec1c1
-#4 DONE 0.1s
+#4 [agent internal] load metadata for docker.io/library/node:24-alpine@sha256:ebfe2f90462722a7a4de65e91990e97fe0d401c70e0e762c5b53302f905ec1c1
+#4 DONE 0.2s
 
 #5 [gateway internal] load .dockerignore
 #5 transferring context: 2B done
-#5 DONE 0.0s
+#5 DONE 0.2s
 
 #6 [agent internal] load .dockerignore
 #6 transferring context: 2B done
-#6 DONE 0.0s
+#6 DONE 0.3s
 
 #7 [gateway internal] load build context
 #7 transferring context: 361B done
-#7 DONE 0.0s
+#7 DONE 0.1s
 
-#8 [migrate telegram-channel 1/4] FROM docker.io/library/node:24-alpine@sha256:ebfe2f90462722a7a4de65e91990e97fe0d401c70e0e762c5b53302f905ec1c1
+#8 [agent telegram-channel 1/4] FROM docker.io/library/node:24-alpine@sha256:ebfe2f90462722a7a4de65e91990e97fe0d401c70e0e762c5b53302f905ec1c1
 #8 resolve docker.io/library/node:24-alpine@sha256:ebfe2f90462722a7a4de65e91990e97fe0d401c70e0e762c5b53302f905ec1c1 0.1s done
-#8 DONE 0.1s
+#8 resolve docker.io/library/node:24-alpine@sha256:ebfe2f90462722a7a4de65e91990e97fe0d401c70e0e762c5b53302f905ec1c1 0.1s done
+#8 DONE 0.2s
 
 #9 [agent 2/4] RUN apk add --no-cache curl socat
 #9 CACHED
@@ -55,142 +51,90 @@
 #11 [agent 4/4] WORKDIR /workspace
 #11 CACHED
 
-#12 [gateway concorde 3/4] WORKDIR /build/concorde
+#12 [migrate runtime 7/9] COPY drizzle.config*.ts ./
 #12 CACHED
 
-#13 [gateway concorde 4/4] RUN git init     && git remote add origin "https://github.com/shutter-network/concorde.git"     && git fetch --depth 1 origin "03dda6a0b1a79077737342709f346bf463a94e20"     && git checkout FETCH_HEAD     && ACTUAL_SHA="$(git rev-parse HEAD)"     && if [ "${ACTUAL_SHA}" != "03dda6a0b1a79077737342709f346bf463a94e20" ]; then          echo "Commit mismatch for Concorde: expected 03dda6a0b1a79077737342709f346bf463a94e20, got ${ACTUAL_SHA}" >&2;          exit 1;        fi     && npm ci     && npm run build     && npm pack
+#13 [migrate telegram-channel 4/4] RUN git init     && git remote add origin "https://github.com/shutter-network/keyper-concorde-agent.git"     && git fetch --depth 1 origin "f5a5c17e1f39570f84d953bb46dba0f35f15b3dc"     && git checkout FETCH_HEAD     && ACTUAL_SHA="$(git rev-parse HEAD)"     && if [ "${ACTUAL_SHA}" != "f5a5c17e1f39570f84d953bb46dba0f35f15b3dc" ]; then          echo "Commit mismatch for keyper agent: expected f5a5c17e1f39570f84d953bb46dba0f35f15b3dc, got ${ACTUAL_SHA}" >&2;          exit 1;        fi     && mkdir -p /out     && cp -r telegram-channel /out/
 #13 CACHED
 
-#14 [gateway telegram-channel 2/4] RUN apk add --no-cache git
+#14 [migrate deps 5/5] RUN npm install --no-audit --no-fund
 #14 CACHED
 
-#15 [gateway runtime 3/9] COPY --from=deps /app/node_modules ./node_modules
+#15 [migrate deps 4/5] COPY package*.json ./
 #15 CACHED
 
-#16 [gateway telegram-channel 4/4] RUN git init     && git remote add origin "https://github.com/shutter-network/keyper-concorde-agent.git"     && git fetch --depth 1 origin "f5a5c17e1f39570f84d953bb46dba0f35f15b3dc"     && git checkout FETCH_HEAD     && ACTUAL_SHA="$(git rev-parse HEAD)"     && if [ "${ACTUAL_SHA}" != "f5a5c17e1f39570f84d953bb46dba0f35f15b3dc" ]; then          echo "Commit mismatch for keyper agent: expected f5a5c17e1f39570f84d953bb46dba0f35f15b3dc, got ${ACTUAL_SHA}" >&2;          exit 1;        fi     && mkdir -p /out     && cp -r telegram-channel /out/
+#16 [migrate runtime 8/9] COPY --from=telegram-channel /out/telegram-channel ./telegram-channel
 #16 CACHED
 
-#17 [gateway runtime 6/9] COPY tsconfig*.json ./
+#17 [migrate runtime 3/9] COPY --from=deps /app/node_modules ./node_modules
 #17 CACHED
 
-#18 [gateway deps 5/5] RUN npm install --no-audit --no-fund
+#18 [migrate concorde 2/4] RUN apk add --no-cache git
 #18 CACHED
 
-#19 [gateway runtime 8/9] COPY --from=telegram-channel /out/telegram-channel ./telegram-channel
+#19 [migrate telegram-channel 3/4] WORKDIR /build/agent
 #19 CACHED
 
-#20 [gateway runtime 7/9] COPY drizzle.config*.ts ./
+#20 [migrate runtime 5/9] COPY package*.json ./
 #20 CACHED
 
-#21 [gateway runtime 5/9] COPY package*.json ./
+#21 [migrate deps 3/5] COPY --from=concorde /build/concorde/shutter-network-concorde-0.1.0.tgz ./vendor/shutter-network-concorde-0.1.0.tgz
 #21 CACHED
 
-#22 [gateway deps 3/5] COPY --from=concorde /build/concorde/shutter-network-concorde-0.1.0.tgz ./vendor/shutter-network-concorde-0.1.0.tgz
+#22 [migrate concorde 4/4] RUN git init     && git remote add origin "https://github.com/shutter-network/concorde.git"     && git fetch --depth 1 origin "03dda6a0b1a79077737342709f346bf463a94e20"     && git checkout FETCH_HEAD     && ACTUAL_SHA="$(git rev-parse HEAD)"     && if [ "${ACTUAL_SHA}" != "03dda6a0b1a79077737342709f346bf463a94e20" ]; then          echo "Commit mismatch for Concorde: expected 03dda6a0b1a79077737342709f346bf463a94e20, got ${ACTUAL_SHA}" >&2;          exit 1;        fi     && npm ci     && npm run build     && npm pack
 #22 CACHED
-
-#23 [gateway runtime 4/9] COPY --from=deps /app/vendor ./vendor
-#23 CACHED
-
-#24 [gateway telegram-channel 3/4] WORKDIR /build/agent
-#24 CACHED
-
-#25 [gateway concorde 2/4] RUN apk add --no-cache git
-#25 CACHED
-
-#26 [gateway deps 2/5] WORKDIR /app
-#26 CACHED
-
-#27 [gateway deps 4/5] COPY package*.json ./
-#27 CACHED
-
-#28 [gateway runtime 9/9] COPY src ./src
-#28 CACHED
-
-#19 [migrate runtime 8/9] COPY --from=telegram-channel /out/telegram-channel ./telegram-channel
-#19 CACHED
-
-#21 [migrate runtime 5/9] COPY package*.json ./
-#21 CACHED
-
-#26 [migrate deps 2/5] WORKDIR /app
-#26 CACHED
-
-#13 [migrate concorde 4/4] RUN git init     && git remote add origin "https://github.com/shutter-network/concorde.git"     && git fetch --depth 1 origin "03dda6a0b1a79077737342709f346bf463a94e20"     && git checkout FETCH_HEAD     && ACTUAL_SHA="$(git rev-parse HEAD)"     && if [ "${ACTUAL_SHA}" != "03dda6a0b1a79077737342709f346bf463a94e20" ]; then          echo "Commit mismatch for Concorde: expected 03dda6a0b1a79077737342709f346bf463a94e20, got ${ACTUAL_SHA}" >&2;          exit 1;        fi     && npm ci     && npm run build     && npm pack
-#13 CACHED
-
-#27 [migrate deps 4/5] COPY package*.json ./
-#27 CACHED
-
-#15 [migrate runtime 3/9] COPY --from=deps /app/node_modules ./node_modules
-#15 CACHED
-
-#22 [migrate deps 3/5] COPY --from=concorde /build/concorde/shutter-network-concorde-0.1.0.tgz ./vendor/shutter-network-concorde-0.1.0.tgz
-#22 CACHED
-
-#24 [migrate telegram-channel 3/4] WORKDIR /build/agent
-#24 CACHED
 
 #23 [migrate runtime 4/9] COPY --from=deps /app/vendor ./vendor
 #23 CACHED
 
-#18 [migrate deps 5/5] RUN npm install --no-audit --no-fund
-#18 CACHED
+#24 [migrate deps 2/5] WORKDIR /app
+#24 CACHED
 
-#16 [migrate telegram-channel 4/4] RUN git init     && git remote add origin "https://github.com/shutter-network/keyper-concorde-agent.git"     && git fetch --depth 1 origin "f5a5c17e1f39570f84d953bb46dba0f35f15b3dc"     && git checkout FETCH_HEAD     && ACTUAL_SHA="$(git rev-parse HEAD)"     && if [ "${ACTUAL_SHA}" != "f5a5c17e1f39570f84d953bb46dba0f35f15b3dc" ]; then          echo "Commit mismatch for keyper agent: expected f5a5c17e1f39570f84d953bb46dba0f35f15b3dc, got ${ACTUAL_SHA}" >&2;          exit 1;        fi     && mkdir -p /out     && cp -r telegram-channel /out/
-#16 CACHED
-
-#14 [migrate telegram-channel 2/4] RUN apk add --no-cache git
-#14 CACHED
-
-#25 [migrate concorde 2/4] RUN apk add --no-cache git
+#25 [migrate runtime 6/9] COPY tsconfig*.json ./
 #25 CACHED
 
-#20 [migrate runtime 7/9] COPY drizzle.config*.ts ./
-#20 CACHED
+#26 [migrate concorde 3/4] WORKDIR /build/concorde
+#26 CACHED
 
-#12 [migrate concorde 3/4] WORKDIR /build/concorde
-#12 CACHED
+#27 [migrate telegram-channel 2/4] RUN apk add --no-cache git
+#27 CACHED
 
-#17 [migrate runtime 6/9] COPY tsconfig*.json ./
-#17 CACHED
+#28 [migrate runtime 9/9] COPY src ./src
+#28 CACHED
 
 #29 [migrate] exporting to image
+#29 exporting layers
 #29 exporting layers done
-#29 exporting manifest sha256:e5dddcefcc5bee29bde8afb9c05a0f67378eaa6eb42ef249481258e7c96c23ed 0.0s done
-#29 exporting config sha256:2872f06d66a9c69d42ff9b4194c9e717067726055da44f055c2a06a3944ea048 0.0s done
-#29 exporting attestation manifest sha256:ebb5ee47e477d679a77060acfa64e8119e504822429ea43a159661a9868c5ecb
-#29 ...
+#29 exporting manifest sha256:0d82829d8cd048c1df557676829cd357ff0a7ff50b6701082af6d52a52822783
+#29 exporting manifest sha256:0d82829d8cd048c1df557676829cd357ff0a7ff50b6701082af6d52a52822783 0.1s done
+#29 exporting config sha256:c1c361a98e3f0f2c7ef0cfc71ba70c22f5975057b58140af28de464253c9f06d 0.1s done
+#29 exporting attestation manifest sha256:9b753ebf5b119e9d1f4a341ab953f10e2f5865f835a37e4901354f7c71df4f36
+#29 exporting attestation manifest sha256:9b753ebf5b119e9d1f4a341ab953f10e2f5865f835a37e4901354f7c71df4f36 0.1s done
+#29 exporting manifest list sha256:723648490818eae404bc903c07ed33003b3791fdc2bd624443d7707957d68dbf 0.1s done
+#29 naming to docker.io/library/concorde-s4-workflow-migrate:latest 0.0s done
+#29 unpacking to docker.io/library/concorde-s4-workflow-migrate:latest
+#29 unpacking to docker.io/library/concorde-s4-workflow-migrate:latest 0.0s done
+#29 DONE 0.8s
 
 #30 [agent] exporting to image
 #30 exporting layers done
-#30 exporting manifest sha256:f29de34f0858d49e6b9fc2b74c1670c17e12acdc70e9532f9889ff159c8bc583 done
-#30 exporting config sha256:3a2305f0e430c4380bffe00c760cbbb99c1ed813cce2e674ac454d4f0882eae5 done
-#30 exporting attestation manifest sha256:9695b037fa6c8aee183451a34f89266b38c3a615cb6779d2ae5fe78413247ee1 0.1s done
-#30 exporting manifest list sha256:7f3f40a085f9fa7f90ca454faba5be63e9dbf7122e0da98d58552de50c0dd95d 0.1s done
-#30 naming to docker.io/library/concorde-s3-relay-agent:latest 0.0s done
-#30 unpacking to docker.io/library/concorde-s3-relay-agent:latest 0.1s done
-#30 DONE 0.4s
-
-#29 [migrate] exporting to image
-#29 exporting attestation manifest sha256:ebb5ee47e477d679a77060acfa64e8119e504822429ea43a159661a9868c5ecb 0.1s done
-#29 exporting manifest list sha256:800b666ecb4398cf1d3aaabbc893c4a13b9e8b7c0f6b8bc3a1df19bdd5cc2ea0 0.1s done
-#29 naming to docker.io/library/concorde-s3-relay-migrate:latest 0.0s done
-#29 unpacking to docker.io/library/concorde-s3-relay-migrate:latest
-#29 ...
+#30 exporting manifest sha256:a766d6dc07d6ffe87110f29ef57bd9ca25ce409ed684e3158122d014165dac3a 0.0s done
+#30 exporting config sha256:88701cff88c2853d82c62b2ee74ced4d5ec00e0dca5b0c229f7231e307be0d60 0.1s done
+#30 exporting attestation manifest sha256:febe8d6a802d15173fb644e794a4dfed2367e745710339c292871356cd5ef904 0.2s done
+#30 exporting manifest list sha256:4249c6c60401beaa818f7e7cd6b17031a504f68aa35f561edcdc67e1c755bc4b 0.1s done
+#30 naming to docker.io/library/concorde-s4-workflow-agent:latest 0.0s done
+#30 unpacking to docker.io/library/concorde-s4-workflow-agent:latest 0.0s done
+#30 DONE 0.9s
 
 #31 [gateway] exporting to image
 #31 exporting layers done
-#31 exporting manifest sha256:fb32c030e4a0c2514ee9c70ebfb2fc3b7245039fbccbae78e2a7c232380cd3dc 0.0s done
-#31 exporting config sha256:ef3b21dceca2f04e12df9ebd9e37dae2adb9b16c2422785b9debb85e42033aa0 0.0s done
-#31 exporting attestation manifest sha256:502e2e871e8d255429cb053b75547adf35c658806e8aaef2807fad00010e54d5 0.1s done
-#31 exporting manifest list sha256:c3d931554244bf55e3734b5cadce62434b8217166c12a4129cd6be22c9dbcbba 0.1s done
-#31 naming to docker.io/library/concorde-s3-relay-gateway:latest 0.0s done
-#31 unpacking to docker.io/library/concorde-s3-relay-gateway:latest 0.1s done
-#31 DONE 0.4s
-
-#29 [migrate] exporting to image
-#29 unpacking to docker.io/library/concorde-s3-relay-migrate:latest 0.1s done
-#29 DONE 0.4s
+#31 exporting manifest sha256:0f8d41d9219aaf2129214d9f32193bc68286fed02594af2e086c309e50a0e150 0.2s done
+#31 exporting config sha256:74c25e6b95631b0c36064e26d19f39b6e7af8e543e2ebf805b858e9ebb0c736e 0.1s done
+#31 exporting attestation manifest sha256:df311946dcace8a1ac295fe1c9ea1314458d069b3e94c470662f1571722b7169 0.1s done
+#31 exporting manifest list sha256:9d096ddb4b33cdc0aa94f31af181dccd8186f99b5554057a3c176642fdd68764 0.1s done
+#31 naming to docker.io/library/concorde-s4-workflow-gateway:latest 0.0s done
+#31 unpacking to docker.io/library/concorde-s4-workflow-gateway:latest 0.0s done
+#31 DONE 0.9s
 
 #32 [agent] resolving provenance for metadata file
 #32 DONE 0.1s
@@ -200,59 +144,40 @@
 
 #34 [migrate] resolving provenance for metadata file
 #34 DONE 0.0s
- Image concorde-s3-relay-migrate Built 
- Image concorde-s3-relay-gateway Built 
- Image concorde-s3-relay-agent Built 
- Container concorde-s3-relay-metrics-gate-1 Running 
- Container concorde-s3-relay-gateway-1 Running 
- Container concorde-s3-relay-model-upstream-1 Running 
- Container concorde-s3-relay-metrics-fixture-1 Running 
- Container concorde-s3-relay-bot-api-1 Running 
- Container concorde-s3-relay-relay-1 Running 
- Container concorde-s3-relay-agent-1 Running 
- Container concorde-s3-relay-postgres-1 Running 
- Container concorde-s3-relay-postgres-1 Waiting 
- Container concorde-s3-relay-postgres-1 Healthy 
- Container concorde-s3-relay-migrate-1 Starting 
- Container concorde-s3-relay-migrate-1 Started 
- Container concorde-s3-relay-migrate-1 Waiting 
- Container concorde-s3-relay-postgres-1 Waiting 
- Container concorde-s3-relay-postgres-1 Healthy 
- Container concorde-s3-relay-migrate-1 Exited 
+ Image concorde-s4-workflow-agent Built 
+ Image concorde-s4-workflow-migrate Built 
+ Image concorde-s4-workflow-gateway Built 
+ Container concorde-s4-workflow-agent-1 Running 
+ Container concorde-s4-workflow-relay-1 Running 
+ Container concorde-s4-workflow-model-upstream-1 Running 
+ Container concorde-s4-workflow-gateway-1 Running 
+ Container concorde-s4-workflow-metrics-fixture-1 Running 
+ Container concorde-s4-workflow-postgres-1 Running 
+ Container concorde-s4-workflow-metrics-gate-1 Running 
+ Container concorde-s4-workflow-bot-api-1 Running 
+ Container concorde-s4-workflow-postgres-1 Waiting 
+ Container concorde-s4-workflow-postgres-1 Healthy 
+ Container concorde-s4-workflow-migrate-1 Starting 
+ Container concorde-s4-workflow-migrate-1 Started 
+ Container concorde-s4-workflow-postgres-1 Waiting 
+ Container concorde-s4-workflow-migrate-1 Waiting 
+ Container concorde-s4-workflow-postgres-1 Healthy 
+ Container concorde-s4-workflow-migrate-1 Exited 
 Waiting for gateway to become healthy...
 Gateway is healthy
-[PASS] S3.1 Stack startup and relay availability - Gateway, agent, relay, and doubles started cleanly
-Running relay route rejection probe from agent container...
-Testing unapproved methods on permitted route...
-GET /v1/chat/completions -> HTTP 405 (expected 405)
-PUT /v1/chat/completions -> HTTP 405 (expected 405)
-DELETE /v1/chat/completions -> HTTP 405 (expected 405)
-Testing unapproved paths...
-GET / -> HTTP 404 (expected 404)
-POST /v1/models -> HTTP 404 (expected 404)
-GET /v1/models -> HTTP 404 (expected 404)
-POST /v1/embeddings -> HTTP 404 (expected 404)
-POST /v1/chat/completions/ -> HTTP 404 (expected 404)
-POST /v1/chat/completions/extra -> HTTP 404 (expected 404)
-All relay rejection tests passed successfully.
-[PASS] S3.2 Relay route and method rejection - Unapproved routes (404) and non-POST methods (405) rejected
-Running streaming timing probe from agent container...
-[STREAM EVENT 1] +0ms: data: {"id":"chatcmpl-1x8v362t","object":"chat.completion.ch...
-[STREAM EVENT 2] +498ms: data: {"id":"chatcmpl-1x8v362t","object":"chat.completion.ch...
-[STREAM EVENT 3] +498ms: data: [DONE]...
-Measured delay between event 1 and event 2: 498ms
-Stream unbuffering verified successfully.
-[PASS] S3.3 Unbuffered incremental streaming - Streamed SSE events arrived incrementally through relay
-Running agent credential isolation probe...
-Checking agent environment variables...
-Checking process environments in agent container...
-Checking agent configuration files...
-Confirmed: model upstream secret is absent from agent container.
-[PASS] S3.4 Credential isolation in agent container - Real model key absent from agent environment, proc, and files
+[PASS] S4.1 Stack startup and service health - All six services and doubles started cleanly
+Verifying network configurations...
+[PASS] S4.2 Network isolation - Agent network isolated and internal; egress network has no external route
+Testing metrics gate method and route rejection from agent container...
+GET on permitted panel 5 -> HTTP 405
+POST on unlisted panel 3 -> HTTP 404
+POST on unlisted path -> HTTP 404
+Metrics gate rejection verified from agent.
+[PASS] S4.3 Metrics gate rejection - Non-POST methods and unlisted panel routes rejected by gate
 Clearing doubles state...
-Injecting Telegram update to trigger model tool call round-trip...
-{"ok":true,"update_id":30001}
-Waiting for agent reply to be delivered over Telegram...
+Injecting Telegram update from chat 100000001...
+{"ok":true,"update_id":40001}
+Waiting for workflow response to be delivered via Telegram (bound: 60s)...
 {
   "ok": true,
   "sent": [
@@ -260,11 +185,11 @@ Waiting for agent reply to be delivered over Telegram...
       "messageId": 1,
       "chatId": "100000001",
       "text": "Keyper status: all systems operational. 30 of 39 keypers online (sample instance: kpr-dappnode-2-gnosis-keyper).",
-      "recordedAt": "2026-10-07T03:33:38.050Z"
+      "recordedAt": "2026-10-07T03:28:14.076Z"
     }
   ]
 }
-Sent messages recorded by bot-api double:
+Sent messages recorded at bot-api double:
 {
   "ok": true,
   "sent": [
@@ -272,23 +197,36 @@ Sent messages recorded by bot-api double:
       "messageId": 1,
       "chatId": "100000001",
       "text": "Keyper status: all systems operational. 30 of 39 keypers online (sample instance: kpr-dappnode-2-gnosis-keyper).",
-      "recordedAt": "2026-10-07T03:33:38.050Z"
+      "recordedAt": "2026-10-07T03:28:14.076Z"
     }
   ]
 }
-[PASS] S3.5 Tool call round-trip and Telegram reply - Tool call executed and reply delivered via Telegram
-Recorded requests at model-upstream:
+[PASS] S4.4 Reply contains fixture metrics - Telegram reply contained exact fixture metrics (node counts and instance identifier)
+Recorded routes at metrics-fixture double:
+{
+  "ok": true,
+  "routes": [
+    {
+      "timestamp": "2026-10-07T03:28:13.539Z",
+      "method": "POST",
+      "url": "/api/public/dashboards/2b52906b091a445989638922fbe69e5e/panels/5/query",
+      "panelId": "5"
+    }
+  ]
+}
+[PASS] S4.5 Metrics gate permitted forwarding - Gate forwarded query to permitted panel 5; zero unpermitted queries reached upstream
+Recorded requests at model-upstream double:
 {
   "ok": true,
   "requests": [
     {
-      "timestamp": "2026-10-07T03:33:36.986Z",
+      "timestamp": "2026-10-07T03:28:13.021Z",
       "method": "POST",
       "url": "/v1/chat/completions",
       "headers": {
         "host": "model-upstream:8080",
         "authorization": "Bearer dummy-model-key-fixture-test-secret-999",
-        "content-length": "9035",
+        "content-length": "9047",
         "accept": "application/json",
         "x-stainless-retry-count": "0",
         "x-stainless-timeout": "300",
@@ -316,7 +254,7 @@ Recorded requests at model-upstream:
             "content": [
               {
                 "type": "text",
-                "text": "User ea8ac077-8a44-4454-9809-8b9cad43048b: Check Keyper node status"
+                "text": "User 88c8c928-404e-43a1-aa90-f493cc265c50: Report current Keyper cluster status"
               }
             ]
           }
@@ -451,13 +389,13 @@ Recorded requests at model-upstream:
       }
     },
     {
-      "timestamp": "2026-10-07T03:33:37.520Z",
+      "timestamp": "2026-10-07T03:28:13.550Z",
       "method": "POST",
       "url": "/v1/chat/completions",
       "headers": {
         "host": "model-upstream:8080",
         "authorization": "Bearer dummy-model-key-fixture-test-secret-999",
-        "content-length": "35755",
+        "content-length": "35767",
         "accept": "application/json",
         "x-stainless-retry-count": "0",
         "x-stainless-timeout": "300",
@@ -485,7 +423,7 @@ Recorded requests at model-upstream:
             "content": [
               {
                 "type": "text",
-                "text": "User ea8ac077-8a44-4454-9809-8b9cad43048b: Check Keyper node status"
+                "text": "User 88c8c928-404e-43a1-aa90-f493cc265c50: Report current Keyper cluster status"
               }
             ]
           },
@@ -494,7 +432,7 @@ Recorded requests at model-upstream:
             "content": null,
             "tool_calls": [
               {
-                "id": "call_l2eu6ayk",
+                "id": "call_q0ptzmog",
                 "type": "function",
                 "function": {
                   "name": "bash",
@@ -506,7 +444,7 @@ Recorded requests at model-upstream:
           {
             "role": "tool",
             "content": "{\"results\":{\"A\":{\"status\":200,\"frames\":[{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"calculatedMinStep\":60000,\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"dappnode\",\"instance\":\"kpr-dappnode-2-gnosis-keyper\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"dappnode\\\", instance=\\\"kpr-dappnode-2-gnosis-keyper\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"dappnode\",\"instance\":\"kpr-jstcz\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"dappnode\\\", instance=\\\"kpr-jstcz\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"dappnode\",\"instance\":\"kpr-mainz-dappnode-shutter-api-keyper\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"dappnode\\\", instance=\\\"kpr-mainz-dappnode-shutter-api-keyper\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"dappnode\",\"instance\":\"kpr-onimat\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"dappnode\\\", instance=\\\"kpr-onimat\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"dappnode\",\"instance\":\"kpr-time-capsule-dappnode2-keyper\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"dappnode\\\", instance=\\\"kpr-time-capsule-dappnode2-keyper\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-56Romeo\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-56Romeo\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-79anvi\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-79anvi\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-Shoni\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-Shoni\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-blockscape\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-blockscape\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-breskulpeak\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-breskulpeak\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-gnosh-initial-keyper-01\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-gnosh-initial-keyper-01\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[0]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-itrocket\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-itrocket\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-kpr-api-ch-01\",\"job\":\"keyper\",\"network\":\"chiado\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-kpr-api-ch-01\\\", job=\\\"keyper\\\", network=\\\"chiado\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-kpr-api-ch-02\",\"job\":\"keyper\",\"network\":\"chiado\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-kpr-api-ch-02\\\", job=\\\"keyper\\\", network=\\\"chiado\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-kpr-api-ch-03\",\"job\":\"keyper\",\"network\":\"chiado\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-kpr-api-ch-03\\\", job=\\\"keyper\\\", network=\\\"chiado\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-kpr-api-ch-04\",\"job\":\"keyper\",\"network\":\"chiado\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-kpr-api-ch-04\\\", job=\\\"keyper\\\", network=\\\"chiado\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-kpr-api-ch-05\",\"job\":\"keyper\",\"network\":\"chiado\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-kpr-api-ch-05\\\", job=\\\"keyper\\\", network=\\\"chiado\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-kpr-chi-01\",\"job\":\"keyper\",\"network\":\"chiado\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-kpr-chi-01\\\", job=\\\"keyper\\\", network=\\\"chiado\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-kpr-chi-02\",\"job\":\"keyper\",\"network\":\"chiado\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-kpr-chi-02\\\", job=\\\"keyper\\\", network=\\\"chiado\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-kpr-chi-03\",\"job\":\"keyper\",\"network\":\"chiado\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-kpr-chi-03\\\", job=\\\"keyper\\\", network=\\\"chiado\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-kpr-chi-04\",\"job\":\"keyper\",\"network\":\"chiado\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-kpr-chi-04\\\", job=\\\"keyper\\\", network=\\\"chiado\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-kpr-chi-05\",\"job\":\"keyper\",\"network\":\"chiado\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-kpr-chi-05\\\", job=\\\"keyper\\\", network=\\\"chiado\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-shutter_api_gnosis_1002_keyper_1\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-shutter_api_gnosis_1002_keyper_1\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[0]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-shutter_api_gnosis_1002_keyper_2\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-shutter_api_gnosis_1002_keyper_2\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[0]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-shutter_api_gnosis_1002_keyper_3\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-shutter_api_gnosis_1002_keyper_3\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[0]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-shutter_api_gnosis_1002_keyper_4\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-shutter_api_gnosis_1002_keyper_4\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[0]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-shutter_api_gnosis_1002_keyper_5\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-shutter_api_gnosis_1002_keyper_5\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[0]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-shutter_api_gnosis_1002_service_kpr_1\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-shutter_api_gnosis_1002_service_kpr_1\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-shutter_api_gnosis_1002_service_kpr_2\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-shutter_api_gnosis_1002_service_kpr_2\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-shutter_api_gnosis_1003_keyper_1\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-shutter_api_gnosis_1003_keyper_1\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-shutter_api_gnosis_1003_keyper_2\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-shutter_api_gnosis_1003_keyper_2\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-shutter_api_gnosis_1003_keyper_3\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-shutter_api_gnosis_1003_keyper_3\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-shutter_api_gnosis_1003_keyper_4\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-shutter_api_gnosis_1003_keyper_4\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-shutter_api_gnosis_1003_keyper_5\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-shutter_api_gnosis_1003_keyper_5\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-shutterizooor2\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-shutterizooor2\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-stevestanzak\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-stevestanzak\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"instance\":\"set1-keyper1\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{instance=\\\"set1-keyper1\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[0]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"instance\":\"set1-keyper2\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{instance=\\\"set1-keyper2\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[0]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"instance\":\"set1-keyper3\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{instance=\\\"set1-keyper3\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[0]]}}]}}}\n",
-            "tool_call_id": "call_l2eu6ayk"
+            "tool_call_id": "call_q0ptzmog"
           }
         ],
         "stream": true,
@@ -639,13 +577,13 @@ Recorded requests at model-upstream:
       }
     },
     {
-      "timestamp": "2026-10-07T03:33:38.051Z",
+      "timestamp": "2026-10-07T03:28:14.076Z",
       "method": "POST",
       "url": "/v1/chat/completions",
       "headers": {
         "host": "model-upstream:8080",
         "authorization": "Bearer dummy-model-key-fixture-test-secret-999",
-        "content-length": "36568",
+        "content-length": "36580",
         "accept": "application/json",
         "x-stainless-retry-count": "0",
         "x-stainless-timeout": "300",
@@ -673,7 +611,7 @@ Recorded requests at model-upstream:
             "content": [
               {
                 "type": "text",
-                "text": "User ea8ac077-8a44-4454-9809-8b9cad43048b: Check Keyper node status"
+                "text": "User 88c8c928-404e-43a1-aa90-f493cc265c50: Report current Keyper cluster status"
               }
             ]
           },
@@ -682,7 +620,7 @@ Recorded requests at model-upstream:
             "content": null,
             "tool_calls": [
               {
-                "id": "call_l2eu6ayk",
+                "id": "call_q0ptzmog",
                 "type": "function",
                 "function": {
                   "name": "bash",
@@ -694,26 +632,26 @@ Recorded requests at model-upstream:
           {
             "role": "tool",
             "content": "{\"results\":{\"A\":{\"status\":200,\"frames\":[{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"calculatedMinStep\":60000,\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"dappnode\",\"instance\":\"kpr-dappnode-2-gnosis-keyper\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"dappnode\\\", instance=\\\"kpr-dappnode-2-gnosis-keyper\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"dappnode\",\"instance\":\"kpr-jstcz\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"dappnode\\\", instance=\\\"kpr-jstcz\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"dappnode\",\"instance\":\"kpr-mainz-dappnode-shutter-api-keyper\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"dappnode\\\", instance=\\\"kpr-mainz-dappnode-shutter-api-keyper\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"dappnode\",\"instance\":\"kpr-onimat\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"dappnode\\\", instance=\\\"kpr-onimat\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"dappnode\",\"instance\":\"kpr-time-capsule-dappnode2-keyper\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"dappnode\\\", instance=\\\"kpr-time-capsule-dappnode2-keyper\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-56Romeo\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-56Romeo\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-79anvi\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-79anvi\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-Shoni\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-Shoni\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-blockscape\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-blockscape\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-breskulpeak\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-breskulpeak\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-gnosh-initial-keyper-01\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-gnosh-initial-keyper-01\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[0]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-itrocket\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-itrocket\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-kpr-api-ch-01\",\"job\":\"keyper\",\"network\":\"chiado\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-kpr-api-ch-01\\\", job=\\\"keyper\\\", network=\\\"chiado\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-kpr-api-ch-02\",\"job\":\"keyper\",\"network\":\"chiado\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-kpr-api-ch-02\\\", job=\\\"keyper\\\", network=\\\"chiado\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-kpr-api-ch-03\",\"job\":\"keyper\",\"network\":\"chiado\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-kpr-api-ch-03\\\", job=\\\"keyper\\\", network=\\\"chiado\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-kpr-api-ch-04\",\"job\":\"keyper\",\"network\":\"chiado\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-kpr-api-ch-04\\\", job=\\\"keyper\\\", network=\\\"chiado\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-kpr-api-ch-05\",\"job\":\"keyper\",\"network\":\"chiado\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-kpr-api-ch-05\\\", job=\\\"keyper\\\", network=\\\"chiado\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-kpr-chi-01\",\"job\":\"keyper\",\"network\":\"chiado\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-kpr-chi-01\\\", job=\\\"keyper\\\", network=\\\"chiado\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-kpr-chi-02\",\"job\":\"keyper\",\"network\":\"chiado\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-kpr-chi-02\\\", job=\\\"keyper\\\", network=\\\"chiado\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-kpr-chi-03\",\"job\":\"keyper\",\"network\":\"chiado\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-kpr-chi-03\\\", job=\\\"keyper\\\", network=\\\"chiado\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-kpr-chi-04\",\"job\":\"keyper\",\"network\":\"chiado\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-kpr-chi-04\\\", job=\\\"keyper\\\", network=\\\"chiado\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-kpr-chi-05\",\"job\":\"keyper\",\"network\":\"chiado\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-kpr-chi-05\\\", job=\\\"keyper\\\", network=\\\"chiado\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-shutter_api_gnosis_1002_keyper_1\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-shutter_api_gnosis_1002_keyper_1\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[0]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-shutter_api_gnosis_1002_keyper_2\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-shutter_api_gnosis_1002_keyper_2\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[0]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-shutter_api_gnosis_1002_keyper_3\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-shutter_api_gnosis_1002_keyper_3\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[0]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-shutter_api_gnosis_1002_keyper_4\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-shutter_api_gnosis_1002_keyper_4\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[0]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-shutter_api_gnosis_1002_keyper_5\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-shutter_api_gnosis_1002_keyper_5\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[0]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-shutter_api_gnosis_1002_service_kpr_1\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-shutter_api_gnosis_1002_service_kpr_1\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-shutter_api_gnosis_1002_service_kpr_2\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-shutter_api_gnosis_1002_service_kpr_2\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-shutter_api_gnosis_1003_keyper_1\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-shutter_api_gnosis_1003_keyper_1\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-shutter_api_gnosis_1003_keyper_2\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-shutter_api_gnosis_1003_keyper_2\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-shutter_api_gnosis_1003_keyper_3\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-shutter_api_gnosis_1003_keyper_3\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-shutter_api_gnosis_1003_keyper_4\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-shutter_api_gnosis_1003_keyper_4\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-shutter_api_gnosis_1003_keyper_5\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-shutter_api_gnosis_1003_keyper_5\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-shutterizooor2\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-shutterizooor2\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-stevestanzak\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-stevestanzak\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"instance\":\"set1-keyper1\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{instance=\\\"set1-keyper1\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[0]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"instance\":\"set1-keyper2\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{instance=\\\"set1-keyper2\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[0]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"instance\":\"set1-keyper3\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{instance=\\\"set1-keyper3\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[0]]}}]}}}\n",
-            "tool_call_id": "call_l2eu6ayk"
+            "tool_call_id": "call_q0ptzmog"
           },
           {
             "role": "assistant",
             "content": null,
             "tool_calls": [
               {
-                "id": "call_j2i9j579",
+                "id": "call_qeefzelm",
                 "type": "function",
                 "function": {
                   "name": "bash",
-                  "arguments": "{\"command\":\"curl -s -X POST \\\"$AGENT_SERVER_URL/messages/\\\" -H \\\"Content-Type: application/json\\\" -d '{\\\"userId\\\":\\\"ea8ac077-8a44-4454-9809-8b9cad43048b\\\",\\\"text\\\":\\\"Keyper status: all systems operational. 30 of 39 keypers online (sample instance: kpr-dappnode-2-gnosis-keyper).\\\"}'\"}"
+                  "arguments": "{\"command\":\"curl -s -X POST \\\"$AGENT_SERVER_URL/messages/\\\" -H \\\"Content-Type: application/json\\\" -d '{\\\"userId\\\":\\\"88c8c928-404e-43a1-aa90-f493cc265c50\\\",\\\"text\\\":\\\"Keyper status: all systems operational. 30 of 39 keypers online (sample instance: kpr-dappnode-2-gnosis-keyper).\\\"}'\"}"
                 }
               }
             ]
           },
           {
             "role": "tool",
-            "content": "{\"id\":\"277ef0ad-9e4b-492b-8d3e-3b38a36ad68b\",\"userId\":\"ea8ac077-8a44-4454-9809-8b9cad43048b\",\"direction\":\"outbound\",\"seq\":2,\"text\":\"Keyper status: all systems operational. 30 of 39 keypers online (sample instance: kpr-dappnode-2-gnosis-keyper).\",\"createdAt\":\"2026-10-07T03:33:38.035Z\"}",
-            "tool_call_id": "call_j2i9j579"
+            "content": "{\"id\":\"964cbbb3-f91b-41e8-a895-564e1c6bd449\",\"userId\":\"88c8c928-404e-43a1-aa90-f493cc265c50\",\"direction\":\"outbound\",\"seq\":2,\"text\":\"Keyper status: all systems operational. 30 of 39 keypers online (sample instance: kpr-dappnode-2-gnosis-keyper).\",\"createdAt\":\"2026-10-07T03:28:14.063Z\"}",
+            "tool_call_id": "call_qeefzelm"
           }
         ],
         "stream": true,
@@ -847,38 +785,7 @@ Recorded requests at model-upstream:
     }
   ]
 }
-[PASS] S3.6 Relay credential replacement - Relay substituted real key; agent placeholder never reached upstream
-[PASS] S3.7 Tool result in follow-up request - Stand-in received tool result in follow-up request
-Testing unreachable model behavior (stopping relay)...
- Container concorde-s3-relay-relay-1 Stopping 
- Container concorde-s3-relay-relay-1 Stopped 
-Injecting Telegram update while relay is stopped...
-{"ok":true,"update_id":30002}
-Waiting for failure notice to be delivered...
-{
-  "ok": true,
-  "sent": [
-    {
-      "messageId": 1,
-      "chatId": "100000001",
-      "text": "I am unable to process your request at this time. Please try again later.",
-      "recordedAt": "2026-10-07T03:34:15.509Z"
-    }
-  ]
-}
-Sent messages during relay outage:
-{
-  "ok": true,
-  "sent": [
-    {
-      "messageId": 1,
-      "chatId": "100000001",
-      "text": "I am unable to process your request at this time. Please try again later.",
-      "recordedAt": "2026-10-07T03:34:15.509Z"
-    }
-  ]
-}
-[PASS] S3.8 Unreachable model failure handling - Run failed promptly with failure notice; zero requests reached upstream
-=== All relay checks (s3) passed successfully ===
-Tearing down relay test stack...
+[PASS] S4.6 Relay credential substitution in workflow - Every model request arrived with substituted relay key; placeholder never leaked
+=== All workflow checks (s4) passed successfully ===
+Tearing down workflow test stack...
 === Run ended with exit code 0 ===

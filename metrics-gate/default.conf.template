@@ -1,0 +1,29 @@
+server {
+    listen 8080;
+    server_name _;
+
+    client_max_body_size 1m;
+
+    location ~ ^/api/public/dashboards/2b52906b091a445989638922fbe69e5e/panels/(1|2|5|6|7|9)/query$ {
+        if ($request_method != POST) {
+            return 405;
+        }
+
+        proxy_pass ${METRICS_UPSTREAM_ORIGIN};
+        proxy_http_version 1.1;
+        proxy_set_header Host $proxy_host;
+        proxy_set_header Connection "";
+
+        proxy_connect_timeout 10s;
+        proxy_read_timeout 60s;
+        proxy_send_timeout 60s;
+
+        proxy_ssl_server_name on;
+        proxy_ssl_verify on;
+        proxy_ssl_trusted_certificate /etc/ssl/certs/ca-certificates.crt;
+    }
+
+    location / {
+        return 404;
+    }
+}

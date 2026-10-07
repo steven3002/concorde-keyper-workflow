@@ -82,13 +82,13 @@ echo "Recorded requests at model-upstream:"
 echo "$upstream_requests"
 
 # Verify that the relay replaced the Authorization header with the real key
-if echo "$upstream_requests" | grep -Fq "dummy-agent-placeholder-key"; then
+if echo "$upstream_requests" | grep -F "dummy-agent-placeholder-key" >/dev/null; then
   echo "ERROR: Agent placeholder key leaked to model upstream!" >&2
   "$HARNESS/verdict.sh" "S3.6 Relay credential replacement" "FAIL" "Agent placeholder key observed at upstream"
   exit 1
 fi
 
-if ! echo "$upstream_requests" | grep -Fq "Bearer $RELAY_KEY"; then
+if ! echo "$upstream_requests" | grep -F "Bearer $RELAY_KEY" >/dev/null; then
   echo "ERROR: Upstream model key was not received by model upstream!" >&2
   "$HARNESS/verdict.sh" "S3.6 Relay credential replacement" "FAIL" "Relay key not found in upstream request headers"
   exit 1
@@ -96,7 +96,7 @@ fi
 "$HARNESS/verdict.sh" "S3.6 Relay credential replacement" "PASS" "Relay substituted real key; agent placeholder never reached upstream"
 
 # Verify tool result present in follow-up request
-if ! echo "$upstream_requests" | grep -Fq '"role": "tool"'; then
+if ! echo "$upstream_requests" | grep -F '"role": "tool"' >/dev/null; then
   echo "ERROR: Follow-up request did not contain role: tool" >&2
   "$HARNESS/verdict.sh" "S3.7 Tool result in follow-up request" "FAIL" "Follow-up request lacked tool result"
   exit 1

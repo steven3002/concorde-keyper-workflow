@@ -128,9 +128,30 @@ services:
     security_opt:
       - no-new-privileges:true
 
+  metrics-gate:
+    image: ${NGINX_IMAGE}
+    environment:
+      METRICS_UPSTREAM_ORIGIN: ${METRICS_UPSTREAM_ORIGIN}
+    volumes:
+      - ./metrics-gate/default.conf.template:/etc/nginx/templates/default.conf.template:ro
+    networks:
+      - agent
+      - egress
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - SETUID
+      - SETGID
+    security_opt:
+      - no-new-privileges:true
+
 networks:
   agent:
     name: concorde_agent
+    internal: true
+    driver_opts:
+      com.docker.network.bridge.gateway_mode_ipv4: isolated
   db:
     name: concorde_db
     internal: true
