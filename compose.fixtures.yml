@@ -8,6 +8,15 @@ services:
     networks:
       - egress
 
+  model-upstream:
+    image: ${NODE_IMAGE}
+    working_dir: /app
+    command: ["node", "doubles/model-upstream/server.ts"]
+    volumes:
+      - ./doubles/model-upstream:/app/doubles/model-upstream:ro
+    networks:
+      - egress
+
 networks:
   egress:
     internal: true

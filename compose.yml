@@ -98,6 +98,8 @@ services:
       - agent_config:/home/agent/.pi/agent
       - agent_sessions:/sessions
       - ./agent/AGENTS.md:/workspace/AGENTS.md:ro
+      - ./agent/models.json:/home/agent/.pi/agent/models.json:ro
+      - ./agent/settings.json:/home/agent/.pi/agent/settings.json:ro
     networks:
       - agent
     cap_drop:
@@ -106,6 +108,25 @@ services:
       - no-new-privileges:true
     pids_limit: 512
     mem_limit: 2g
+
+  relay:
+    image: ${NGINX_IMAGE}
+    environment:
+      MODEL_UPSTREAM_ORIGIN: ${MODEL_UPSTREAM_ORIGIN}
+      MODEL_UPSTREAM_KEY: ${MODEL_UPSTREAM_KEY}
+    volumes:
+      - ./relay/default.conf.template:/etc/nginx/templates/default.conf.template:ro
+    networks:
+      - agent
+      - egress
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - SETUID
+      - SETGID
+    security_opt:
+      - no-new-privileges:true
 
 networks:
   agent:

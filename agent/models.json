@@ -1,0 +1,25 @@
+{
+  "providers": {
+    "relay": {
+      "baseUrl": "http://relay:8080/v1",
+      "apiKey": "dummy-agent-placeholder-key",
+      "api": "openai-completions",
+      "models": [
+        {
+          "id": "keyper-status-model",
+          "name": "Keyper Status Model",
+          "reasoning": false,
+          "input": ["text"],
+          "cost": {
+            "input": 0,
+            "output": 0,
+            "cacheRead": 0,
+            "cacheWrite": 0
+          },
+          "contextWindow": 128000,
+          "maxTokens": 4096
+        }
+      ]
+    }
+  }
+}
