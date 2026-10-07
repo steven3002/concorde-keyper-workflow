@@ -26,6 +26,15 @@ services:
     networks:
       - egress
 
+  canary:
+    image: ${NODE_IMAGE}
+    working_dir: /app
+    command: ["node", "doubles/canary/server.ts"]
+    volumes:
+      - ./doubles/canary:/app/doubles/canary:ro
+    networks:
+      - egress
+
 networks:
   egress:
     internal: true

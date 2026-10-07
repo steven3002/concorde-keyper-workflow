@@ -30,6 +30,15 @@ TELEGRAM_TOKEN="$(grep -E '^TELEGRAM_BOT_TOKEN=' "$FIXTURES_FILE" | cut -d'=' -f
 # Clear any previous messages in the mock bot API
 "$HARNESS/telegram.sh" clear >/dev/null
 
+# Ensure no model endpoint is connected for this baseline check
+docker compose \
+  --env-file "$REPO_ROOT/pins.env" \
+  --env-file "$FIXTURES_FILE" \
+  -f "$REPO_ROOT/compose.yml" \
+  -f "$REPO_ROOT/compose.fixtures.yml" \
+  -p "$PROJECT_NAME" \
+  stop relay >/dev/null 2>&1 || true
+
 # 2. Inject update from seeded chat: produces stored inbound message and Run
 echo "Injecting update from seeded chat $SEEDED_CHAT_ID..."
 "$HARNESS/telegram.sh" inject "$SEEDED_CHAT_ID" "Check node status" 20001

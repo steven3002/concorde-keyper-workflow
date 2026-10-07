@@ -1,46 +1,50 @@
-=== Run started at 2026-10-07T03:27:50Z for workflow ===
+=== Run started at 2026-10-07T05:54:34Z for workflow ===
 === Starting end-to-end workflow check (s4) ===
 Resetting and starting stack...
+ Image concorde-s4-workflow-gateway Building 
  Image concorde-s4-workflow-agent Building 
  Image concorde-s4-workflow-migrate Building 
- Image concorde-s4-workflow-gateway Building 
 #1 [internal] load local bake definitions
 #1 reading from stdin 2.67kB done
 #1 DONE 0.0s
 
-#2 [migrate internal] load build definition from Dockerfile
+#2 [gateway internal] load build definition from Dockerfile
 #2 transferring dockerfile: 2.50kB done
 #2 WARN: InvalidDefaultArgInFrom: Default value for ARG ${NODE_IMAGE} results in empty or invalid base image name (line 8)
 #2 WARN: InvalidDefaultArgInFrom: Default value for ARG ${NODE_IMAGE} results in empty or invalid base image name (line 27)
 #2 WARN: InvalidDefaultArgInFrom: Default value for ARG ${NODE_IMAGE} results in empty or invalid base image name (line 45)
 #2 WARN: InvalidDefaultArgInFrom: Default value for ARG ${NODE_IMAGE} results in empty or invalid base image name (line 52)
 #2 WARN: InvalidDefaultArgInFrom: Default value for ARG ${NODE_IMAGE} results in empty or invalid base image name (line 64)
-#2 DONE 0.1s
+#2 WARN: InvalidDefaultArgInFrom: Default value for ARG ${NODE_IMAGE} results in empty or invalid base image name (line 8)
+#2 WARN: InvalidDefaultArgInFrom: Default value for ARG ${NODE_IMAGE} results in empty or invalid base image name (line 27)
+#2 WARN: InvalidDefaultArgInFrom: Default value for ARG ${NODE_IMAGE} results in empty or invalid base image name (line 45)
+#2 WARN: InvalidDefaultArgInFrom: Default value for ARG ${NODE_IMAGE} results in empty or invalid base image name (line 52)
+#2 WARN: InvalidDefaultArgInFrom: Default value for ARG ${NODE_IMAGE} results in empty or invalid base image name (line 64)
+#2 DONE 0.0s
 
 #3 [agent internal] load build definition from Dockerfile
 #3 transferring dockerfile: 271B done
 #3 WARN: InvalidDefaultArgInFrom: Default value for ARG ${NODE_IMAGE} results in empty or invalid base image name (line 4)
-#3 DONE 0.1s
+#3 DONE 0.0s
 
 #4 [agent internal] load metadata for docker.io/library/node:24-alpine@sha256:ebfe2f90462722a7a4de65e91990e97fe0d401c70e0e762c5b53302f905ec1c1
-#4 DONE 0.2s
+#4 DONE 0.1s
 
-#5 [gateway internal] load .dockerignore
+#5 [agent internal] load .dockerignore
 #5 transferring context: 2B done
-#5 DONE 0.2s
+#5 DONE 0.0s
 
-#6 [agent internal] load .dockerignore
+#6 [gateway internal] load .dockerignore
 #6 transferring context: 2B done
-#6 DONE 0.3s
+#6 DONE 0.0s
 
 #7 [gateway internal] load build context
 #7 transferring context: 361B done
-#7 DONE 0.1s
+#7 DONE 0.0s
 
-#8 [agent telegram-channel 1/4] FROM docker.io/library/node:24-alpine@sha256:ebfe2f90462722a7a4de65e91990e97fe0d401c70e0e762c5b53302f905ec1c1
+#8 [agent 1/4] FROM docker.io/library/node:24-alpine@sha256:ebfe2f90462722a7a4de65e91990e97fe0d401c70e0e762c5b53302f905ec1c1
 #8 resolve docker.io/library/node:24-alpine@sha256:ebfe2f90462722a7a4de65e91990e97fe0d401c70e0e762c5b53302f905ec1c1 0.1s done
-#8 resolve docker.io/library/node:24-alpine@sha256:ebfe2f90462722a7a4de65e91990e97fe0d401c70e0e762c5b53302f905ec1c1 0.1s done
-#8 DONE 0.2s
+#8 DONE 0.1s
 
 #9 [agent 2/4] RUN apk add --no-cache curl socat
 #9 CACHED
@@ -51,110 +55,111 @@ Resetting and starting stack...
 #11 [agent 4/4] WORKDIR /workspace
 #11 CACHED
 
-#12 [migrate runtime 7/9] COPY drizzle.config*.ts ./
+#12 [migrate deps 3/5] COPY --from=concorde /build/concorde/shutter-network-concorde-0.1.0.tgz ./vendor/shutter-network-concorde-0.1.0.tgz
 #12 CACHED
 
-#13 [migrate telegram-channel 4/4] RUN git init     && git remote add origin "https://github.com/shutter-network/keyper-concorde-agent.git"     && git fetch --depth 1 origin "f5a5c17e1f39570f84d953bb46dba0f35f15b3dc"     && git checkout FETCH_HEAD     && ACTUAL_SHA="$(git rev-parse HEAD)"     && if [ "${ACTUAL_SHA}" != "f5a5c17e1f39570f84d953bb46dba0f35f15b3dc" ]; then          echo "Commit mismatch for keyper agent: expected f5a5c17e1f39570f84d953bb46dba0f35f15b3dc, got ${ACTUAL_SHA}" >&2;          exit 1;        fi     && mkdir -p /out     && cp -r telegram-channel /out/
+#13 [migrate runtime 3/9] COPY --from=deps /app/node_modules ./node_modules
 #13 CACHED
 
-#14 [migrate deps 5/5] RUN npm install --no-audit --no-fund
+#14 [migrate runtime 6/9] COPY tsconfig*.json ./
 #14 CACHED
 
-#15 [migrate deps 4/5] COPY package*.json ./
+#15 [migrate telegram-channel 2/4] RUN apk add --no-cache git
 #15 CACHED
 
-#16 [migrate runtime 8/9] COPY --from=telegram-channel /out/telegram-channel ./telegram-channel
+#16 [migrate deps 4/5] COPY package*.json ./
 #16 CACHED
 
-#17 [migrate runtime 3/9] COPY --from=deps /app/node_modules ./node_modules
+#17 [migrate deps 5/5] RUN npm install --no-audit --no-fund
 #17 CACHED
 
-#18 [migrate concorde 2/4] RUN apk add --no-cache git
+#18 [migrate runtime 5/9] COPY package*.json ./
 #18 CACHED
 
-#19 [migrate telegram-channel 3/4] WORKDIR /build/agent
+#19 [migrate telegram-channel 4/4] RUN git init     && git remote add origin "https://github.com/shutter-network/keyper-concorde-agent.git"     && git fetch --depth 1 origin "f5a5c17e1f39570f84d953bb46dba0f35f15b3dc"     && git checkout FETCH_HEAD     && ACTUAL_SHA="$(git rev-parse HEAD)"     && if [ "${ACTUAL_SHA}" != "f5a5c17e1f39570f84d953bb46dba0f35f15b3dc" ]; then          echo "Commit mismatch for keyper agent: expected f5a5c17e1f39570f84d953bb46dba0f35f15b3dc, got ${ACTUAL_SHA}" >&2;          exit 1;        fi     && mkdir -p /out     && cp -r telegram-channel /out/
 #19 CACHED
 
-#20 [migrate runtime 5/9] COPY package*.json ./
+#20 [migrate concorde 4/4] RUN git init     && git remote add origin "https://github.com/shutter-network/concorde.git"     && git fetch --depth 1 origin "03dda6a0b1a79077737342709f346bf463a94e20"     && git checkout FETCH_HEAD     && ACTUAL_SHA="$(git rev-parse HEAD)"     && if [ "${ACTUAL_SHA}" != "03dda6a0b1a79077737342709f346bf463a94e20" ]; then          echo "Commit mismatch for Concorde: expected 03dda6a0b1a79077737342709f346bf463a94e20, got ${ACTUAL_SHA}" >&2;          exit 1;        fi     && npm ci     && npm run build     && npm pack
 #20 CACHED
 
-#21 [migrate deps 3/5] COPY --from=concorde /build/concorde/shutter-network-concorde-0.1.0.tgz ./vendor/shutter-network-concorde-0.1.0.tgz
+#21 [migrate runtime 4/9] COPY --from=deps /app/vendor ./vendor
 #21 CACHED
 
-#22 [migrate concorde 4/4] RUN git init     && git remote add origin "https://github.com/shutter-network/concorde.git"     && git fetch --depth 1 origin "03dda6a0b1a79077737342709f346bf463a94e20"     && git checkout FETCH_HEAD     && ACTUAL_SHA="$(git rev-parse HEAD)"     && if [ "${ACTUAL_SHA}" != "03dda6a0b1a79077737342709f346bf463a94e20" ]; then          echo "Commit mismatch for Concorde: expected 03dda6a0b1a79077737342709f346bf463a94e20, got ${ACTUAL_SHA}" >&2;          exit 1;        fi     && npm ci     && npm run build     && npm pack
+#22 [migrate concorde 3/4] WORKDIR /build/concorde
 #22 CACHED
 
-#23 [migrate runtime 4/9] COPY --from=deps /app/vendor ./vendor
+#23 [migrate telegram-channel 3/4] WORKDIR /build/agent
 #23 CACHED
 
-#24 [migrate deps 2/5] WORKDIR /app
+#24 [migrate runtime 8/9] COPY --from=telegram-channel /out/telegram-channel ./telegram-channel
 #24 CACHED
 
-#25 [migrate runtime 6/9] COPY tsconfig*.json ./
+#25 [migrate deps 2/5] WORKDIR /app
 #25 CACHED
 
-#26 [migrate concorde 3/4] WORKDIR /build/concorde
+#26 [migrate runtime 7/9] COPY drizzle.config*.ts ./
 #26 CACHED
 
-#27 [migrate telegram-channel 2/4] RUN apk add --no-cache git
+#27 [migrate concorde 2/4] RUN apk add --no-cache git
 #27 CACHED
 
 #28 [migrate runtime 9/9] COPY src ./src
 #28 CACHED
 
 #29 [migrate] exporting to image
-#29 exporting layers
 #29 exporting layers done
-#29 exporting manifest sha256:0d82829d8cd048c1df557676829cd357ff0a7ff50b6701082af6d52a52822783
-#29 exporting manifest sha256:0d82829d8cd048c1df557676829cd357ff0a7ff50b6701082af6d52a52822783 0.1s done
-#29 exporting config sha256:c1c361a98e3f0f2c7ef0cfc71ba70c22f5975057b58140af28de464253c9f06d 0.1s done
-#29 exporting attestation manifest sha256:9b753ebf5b119e9d1f4a341ab953f10e2f5865f835a37e4901354f7c71df4f36
-#29 exporting attestation manifest sha256:9b753ebf5b119e9d1f4a341ab953f10e2f5865f835a37e4901354f7c71df4f36 0.1s done
-#29 exporting manifest list sha256:723648490818eae404bc903c07ed33003b3791fdc2bd624443d7707957d68dbf 0.1s done
+#29 exporting manifest sha256:0d82829d8cd048c1df557676829cd357ff0a7ff50b6701082af6d52a52822783 0.0s done
+#29 exporting config sha256:c1c361a98e3f0f2c7ef0cfc71ba70c22f5975057b58140af28de464253c9f06d
+#29 exporting config sha256:c1c361a98e3f0f2c7ef0cfc71ba70c22f5975057b58140af28de464253c9f06d 0.0s done
+#29 exporting attestation manifest sha256:9da805feb1804538dd3bf38de29407470b39c91503714432121c7b60126069c8
+#29 exporting attestation manifest sha256:9da805feb1804538dd3bf38de29407470b39c91503714432121c7b60126069c8 0.1s done
+#29 exporting manifest list sha256:ca619d4f241b9e05d521c105aa659371141b9a7c0d21bc02417bfe8876156e29
+#29 exporting manifest list sha256:ca619d4f241b9e05d521c105aa659371141b9a7c0d21bc02417bfe8876156e29 0.1s done
 #29 naming to docker.io/library/concorde-s4-workflow-migrate:latest 0.0s done
 #29 unpacking to docker.io/library/concorde-s4-workflow-migrate:latest
 #29 unpacking to docker.io/library/concorde-s4-workflow-migrate:latest 0.0s done
-#29 DONE 0.8s
+#29 DONE 0.6s
 
 #30 [agent] exporting to image
 #30 exporting layers done
-#30 exporting manifest sha256:a766d6dc07d6ffe87110f29ef57bd9ca25ce409ed684e3158122d014165dac3a 0.0s done
-#30 exporting config sha256:88701cff88c2853d82c62b2ee74ced4d5ec00e0dca5b0c229f7231e307be0d60 0.1s done
-#30 exporting attestation manifest sha256:febe8d6a802d15173fb644e794a4dfed2367e745710339c292871356cd5ef904 0.2s done
-#30 exporting manifest list sha256:4249c6c60401beaa818f7e7cd6b17031a504f68aa35f561edcdc67e1c755bc4b 0.1s done
+#30 exporting manifest sha256:a766d6dc07d6ffe87110f29ef57bd9ca25ce409ed684e3158122d014165dac3a done
+#30 exporting config sha256:88701cff88c2853d82c62b2ee74ced4d5ec00e0dca5b0c229f7231e307be0d60 done
+#30 exporting attestation manifest sha256:f9b1dcbe5b6c86a9cdaf865ff542f5410e233644f7a0061f1469700eb8b9912e 0.1s done
+#30 exporting manifest list sha256:14957a7409344d570aa3502ddde148c3e772efa10af0d145b042df7a03759317 0.1s done
 #30 naming to docker.io/library/concorde-s4-workflow-agent:latest 0.0s done
-#30 unpacking to docker.io/library/concorde-s4-workflow-agent:latest 0.0s done
-#30 DONE 0.9s
+#30 unpacking to docker.io/library/concorde-s4-workflow-agent:latest 0.1s done
+#30 DONE 0.5s
 
 #31 [gateway] exporting to image
 #31 exporting layers done
-#31 exporting manifest sha256:0f8d41d9219aaf2129214d9f32193bc68286fed02594af2e086c309e50a0e150 0.2s done
-#31 exporting config sha256:74c25e6b95631b0c36064e26d19f39b6e7af8e543e2ebf805b858e9ebb0c736e 0.1s done
-#31 exporting attestation manifest sha256:df311946dcace8a1ac295fe1c9ea1314458d069b3e94c470662f1571722b7169 0.1s done
-#31 exporting manifest list sha256:9d096ddb4b33cdc0aa94f31af181dccd8186f99b5554057a3c176642fdd68764 0.1s done
+#31 exporting manifest sha256:0f8d41d9219aaf2129214d9f32193bc68286fed02594af2e086c309e50a0e150 0.0s done
+#31 exporting config sha256:74c25e6b95631b0c36064e26d19f39b6e7af8e543e2ebf805b858e9ebb0c736e 0.0s done
+#31 exporting attestation manifest sha256:48ca026a45ecf1c4ce9efad21902a6028ea083dd9639415ddf262d3ac4c715c1 0.1s done
+#31 exporting manifest list sha256:834827e2d5fe3979fe7da248ff3d605bda7401786eecbf1157fb221324a806b5 0.1s done
 #31 naming to docker.io/library/concorde-s4-workflow-gateway:latest 0.0s done
-#31 unpacking to docker.io/library/concorde-s4-workflow-gateway:latest 0.0s done
-#31 DONE 0.9s
+#31 unpacking to docker.io/library/concorde-s4-workflow-gateway:latest 0.1s done
+#31 DONE 0.6s
 
 #32 [agent] resolving provenance for metadata file
 #32 DONE 0.1s
 
-#33 [gateway] resolving provenance for metadata file
+#33 [migrate] resolving provenance for metadata file
 #33 DONE 0.1s
 
-#34 [migrate] resolving provenance for metadata file
+#34 [gateway] resolving provenance for metadata file
 #34 DONE 0.0s
- Image concorde-s4-workflow-agent Built 
  Image concorde-s4-workflow-migrate Built 
+ Image concorde-s4-workflow-agent Built 
  Image concorde-s4-workflow-gateway Built 
- Container concorde-s4-workflow-agent-1 Running 
+ Container concorde-s4-workflow-canary-1 Running 
  Container concorde-s4-workflow-relay-1 Running 
- Container concorde-s4-workflow-model-upstream-1 Running 
- Container concorde-s4-workflow-gateway-1 Running 
  Container concorde-s4-workflow-metrics-fixture-1 Running 
+ Container concorde-s4-workflow-gateway-1 Running 
+ Container concorde-s4-workflow-bot-api-1 Running 
  Container concorde-s4-workflow-postgres-1 Running 
  Container concorde-s4-workflow-metrics-gate-1 Running 
- Container concorde-s4-workflow-bot-api-1 Running 
+ Container concorde-s4-workflow-agent-1 Running 
+ Container concorde-s4-workflow-model-upstream-1 Running 
  Container concorde-s4-workflow-postgres-1 Waiting 
  Container concorde-s4-workflow-postgres-1 Healthy 
  Container concorde-s4-workflow-migrate-1 Starting 
@@ -185,7 +190,7 @@ Waiting for workflow response to be delivered via Telegram (bound: 60s)...
       "messageId": 1,
       "chatId": "100000001",
       "text": "Keyper status: all systems operational. 30 of 39 keypers online (sample instance: kpr-dappnode-2-gnosis-keyper).",
-      "recordedAt": "2026-10-07T03:28:14.076Z"
+      "recordedAt": "2026-10-07T05:54:56.874Z"
     }
   ]
 }
@@ -197,7 +202,7 @@ Sent messages recorded at bot-api double:
       "messageId": 1,
       "chatId": "100000001",
       "text": "Keyper status: all systems operational. 30 of 39 keypers online (sample instance: kpr-dappnode-2-gnosis-keyper).",
-      "recordedAt": "2026-10-07T03:28:14.076Z"
+      "recordedAt": "2026-10-07T05:54:56.874Z"
     }
   ]
 }
@@ -207,7 +212,7 @@ Recorded routes at metrics-fixture double:
   "ok": true,
   "routes": [
     {
-      "timestamp": "2026-10-07T03:28:13.539Z",
+      "timestamp": "2026-10-07T05:54:56.333Z",
       "method": "POST",
       "url": "/api/public/dashboards/2b52906b091a445989638922fbe69e5e/panels/5/query",
       "panelId": "5"
@@ -220,7 +225,7 @@ Recorded requests at model-upstream double:
   "ok": true,
   "requests": [
     {
-      "timestamp": "2026-10-07T03:28:13.021Z",
+      "timestamp": "2026-10-07T05:54:55.812Z",
       "method": "POST",
       "url": "/v1/chat/completions",
       "headers": {
@@ -254,7 +259,7 @@ Recorded requests at model-upstream double:
             "content": [
               {
                 "type": "text",
-                "text": "User 88c8c928-404e-43a1-aa90-f493cc265c50: Report current Keyper cluster status"
+                "text": "User 35bc8d96-b5c6-45f1-ad37-fb241dafd732: Report current Keyper cluster status"
               }
             ]
           }
@@ -389,7 +394,7 @@ Recorded requests at model-upstream double:
       }
     },
     {
-      "timestamp": "2026-10-07T03:28:13.550Z",
+      "timestamp": "2026-10-07T05:54:56.344Z",
       "method": "POST",
       "url": "/v1/chat/completions",
       "headers": {
@@ -423,7 +428,7 @@ Recorded requests at model-upstream double:
             "content": [
               {
                 "type": "text",
-                "text": "User 88c8c928-404e-43a1-aa90-f493cc265c50: Report current Keyper cluster status"
+                "text": "User 35bc8d96-b5c6-45f1-ad37-fb241dafd732: Report current Keyper cluster status"
               }
             ]
           },
@@ -432,7 +437,7 @@ Recorded requests at model-upstream double:
             "content": null,
             "tool_calls": [
               {
-                "id": "call_q0ptzmog",
+                "id": "call_6ivtowvw",
                 "type": "function",
                 "function": {
                   "name": "bash",
@@ -444,7 +449,7 @@ Recorded requests at model-upstream double:
           {
             "role": "tool",
             "content": "{\"results\":{\"A\":{\"status\":200,\"frames\":[{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"calculatedMinStep\":60000,\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"dappnode\",\"instance\":\"kpr-dappnode-2-gnosis-keyper\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"dappnode\\\", instance=\\\"kpr-dappnode-2-gnosis-keyper\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"dappnode\",\"instance\":\"kpr-jstcz\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"dappnode\\\", instance=\\\"kpr-jstcz\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"dappnode\",\"instance\":\"kpr-mainz-dappnode-shutter-api-keyper\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"dappnode\\\", instance=\\\"kpr-mainz-dappnode-shutter-api-keyper\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"dappnode\",\"instance\":\"kpr-onimat\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"dappnode\\\", instance=\\\"kpr-onimat\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"dappnode\",\"instance\":\"kpr-time-capsule-dappnode2-keyper\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"dappnode\\\", instance=\\\"kpr-time-capsule-dappnode2-keyper\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-56Romeo\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-56Romeo\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-79anvi\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-79anvi\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-Shoni\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-Shoni\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-blockscape\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-blockscape\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-breskulpeak\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-breskulpeak\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-gnosh-initial-keyper-01\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-gnosh-initial-keyper-01\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[0]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-itrocket\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-itrocket\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-kpr-api-ch-01\",\"job\":\"keyper\",\"network\":\"chiado\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-kpr-api-ch-01\\\", job=\\\"keyper\\\", network=\\\"chiado\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-kpr-api-ch-02\",\"job\":\"keyper\",\"network\":\"chiado\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-kpr-api-ch-02\\\", job=\\\"keyper\\\", network=\\\"chiado\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-kpr-api-ch-03\",\"job\":\"keyper\",\"network\":\"chiado\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-kpr-api-ch-03\\\", job=\\\"keyper\\\", network=\\\"chiado\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-kpr-api-ch-04\",\"job\":\"keyper\",\"network\":\"chiado\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-kpr-api-ch-04\\\", job=\\\"keyper\\\", network=\\\"chiado\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-kpr-api-ch-05\",\"job\":\"keyper\",\"network\":\"chiado\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-kpr-api-ch-05\\\", job=\\\"keyper\\\", network=\\\"chiado\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-kpr-chi-01\",\"job\":\"keyper\",\"network\":\"chiado\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-kpr-chi-01\\\", job=\\\"keyper\\\", network=\\\"chiado\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-kpr-chi-02\",\"job\":\"keyper\",\"network\":\"chiado\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-kpr-chi-02\\\", job=\\\"keyper\\\", network=\\\"chiado\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-kpr-chi-03\",\"job\":\"keyper\",\"network\":\"chiado\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-kpr-chi-03\\\", job=\\\"keyper\\\", network=\\\"chiado\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-kpr-chi-04\",\"job\":\"keyper\",\"network\":\"chiado\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-kpr-chi-04\\\", job=\\\"keyper\\\", network=\\\"chiado\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-kpr-chi-05\",\"job\":\"keyper\",\"network\":\"chiado\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-kpr-chi-05\\\", job=\\\"keyper\\\", network=\\\"chiado\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-shutter_api_gnosis_1002_keyper_1\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-shutter_api_gnosis_1002_keyper_1\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[0]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-shutter_api_gnosis_1002_keyper_2\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-shutter_api_gnosis_1002_keyper_2\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[0]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-shutter_api_gnosis_1002_keyper_3\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-shutter_api_gnosis_1002_keyper_3\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[0]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-shutter_api_gnosis_1002_keyper_4\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-shutter_api_gnosis_1002_keyper_4\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[0]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-shutter_api_gnosis_1002_keyper_5\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-shutter_api_gnosis_1002_keyper_5\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[0]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-shutter_api_gnosis_1002_service_kpr_1\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-shutter_api_gnosis_1002_service_kpr_1\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-shutter_api_gnosis_1002_service_kpr_2\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-shutter_api_gnosis_1002_service_kpr_2\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-shutter_api_gnosis_1003_keyper_1\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-shutter_api_gnosis_1003_keyper_1\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-shutter_api_gnosis_1003_keyper_2\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-shutter_api_gnosis_1003_keyper_2\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-shutter_api_gnosis_1003_keyper_3\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-shutter_api_gnosis_1003_keyper_3\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-shutter_api_gnosis_1003_keyper_4\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-shutter_api_gnosis_1003_keyper_4\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-shutter_api_gnosis_1003_keyper_5\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-shutter_api_gnosis_1003_keyper_5\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-shutterizooor2\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-shutterizooor2\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-stevestanzak\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-stevestanzak\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"instance\":\"set1-keyper1\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{instance=\\\"set1-keyper1\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[0]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"instance\":\"set1-keyper2\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{instance=\\\"set1-keyper2\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[0]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"instance\":\"set1-keyper3\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{instance=\\\"set1-keyper3\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[0]]}}]}}}\n",
-            "tool_call_id": "call_q0ptzmog"
+            "tool_call_id": "call_6ivtowvw"
           }
         ],
         "stream": true,
@@ -577,7 +582,7 @@ Recorded requests at model-upstream double:
       }
     },
     {
-      "timestamp": "2026-10-07T03:28:14.076Z",
+      "timestamp": "2026-10-07T05:54:56.872Z",
       "method": "POST",
       "url": "/v1/chat/completions",
       "headers": {
@@ -611,7 +616,7 @@ Recorded requests at model-upstream double:
             "content": [
               {
                 "type": "text",
-                "text": "User 88c8c928-404e-43a1-aa90-f493cc265c50: Report current Keyper cluster status"
+                "text": "User 35bc8d96-b5c6-45f1-ad37-fb241dafd732: Report current Keyper cluster status"
               }
             ]
           },
@@ -620,7 +625,7 @@ Recorded requests at model-upstream double:
             "content": null,
             "tool_calls": [
               {
-                "id": "call_q0ptzmog",
+                "id": "call_6ivtowvw",
                 "type": "function",
                 "function": {
                   "name": "bash",
@@ -632,26 +637,26 @@ Recorded requests at model-upstream double:
           {
             "role": "tool",
             "content": "{\"results\":{\"A\":{\"status\":200,\"frames\":[{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"calculatedMinStep\":60000,\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"dappnode\",\"instance\":\"kpr-dappnode-2-gnosis-keyper\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"dappnode\\\", instance=\\\"kpr-dappnode-2-gnosis-keyper\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"dappnode\",\"instance\":\"kpr-jstcz\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"dappnode\\\", instance=\\\"kpr-jstcz\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"dappnode\",\"instance\":\"kpr-mainz-dappnode-shutter-api-keyper\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"dappnode\\\", instance=\\\"kpr-mainz-dappnode-shutter-api-keyper\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"dappnode\",\"instance\":\"kpr-onimat\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"dappnode\\\", instance=\\\"kpr-onimat\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"dappnode\",\"instance\":\"kpr-time-capsule-dappnode2-keyper\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"dappnode\\\", instance=\\\"kpr-time-capsule-dappnode2-keyper\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-56Romeo\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-56Romeo\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-79anvi\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-79anvi\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-Shoni\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-Shoni\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-blockscape\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-blockscape\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-breskulpeak\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-breskulpeak\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-gnosh-initial-keyper-01\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-gnosh-initial-keyper-01\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[0]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-itrocket\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-itrocket\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-kpr-api-ch-01\",\"job\":\"keyper\",\"network\":\"chiado\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-kpr-api-ch-01\\\", job=\\\"keyper\\\", network=\\\"chiado\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-kpr-api-ch-02\",\"job\":\"keyper\",\"network\":\"chiado\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-kpr-api-ch-02\\\", job=\\\"keyper\\\", network=\\\"chiado\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-kpr-api-ch-03\",\"job\":\"keyper\",\"network\":\"chiado\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-kpr-api-ch-03\\\", job=\\\"keyper\\\", network=\\\"chiado\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-kpr-api-ch-04\",\"job\":\"keyper\",\"network\":\"chiado\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-kpr-api-ch-04\\\", job=\\\"keyper\\\", network=\\\"chiado\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-kpr-api-ch-05\",\"job\":\"keyper\",\"network\":\"chiado\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-kpr-api-ch-05\\\", job=\\\"keyper\\\", network=\\\"chiado\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-kpr-chi-01\",\"job\":\"keyper\",\"network\":\"chiado\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-kpr-chi-01\\\", job=\\\"keyper\\\", network=\\\"chiado\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-kpr-chi-02\",\"job\":\"keyper\",\"network\":\"chiado\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-kpr-chi-02\\\", job=\\\"keyper\\\", network=\\\"chiado\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-kpr-chi-03\",\"job\":\"keyper\",\"network\":\"chiado\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-kpr-chi-03\\\", job=\\\"keyper\\\", network=\\\"chiado\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-kpr-chi-04\",\"job\":\"keyper\",\"network\":\"chiado\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-kpr-chi-04\\\", job=\\\"keyper\\\", network=\\\"chiado\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-kpr-chi-05\",\"job\":\"keyper\",\"network\":\"chiado\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-kpr-chi-05\\\", job=\\\"keyper\\\", network=\\\"chiado\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-shutter_api_gnosis_1002_keyper_1\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-shutter_api_gnosis_1002_keyper_1\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[0]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-shutter_api_gnosis_1002_keyper_2\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-shutter_api_gnosis_1002_keyper_2\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[0]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-shutter_api_gnosis_1002_keyper_3\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-shutter_api_gnosis_1002_keyper_3\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[0]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-shutter_api_gnosis_1002_keyper_4\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-shutter_api_gnosis_1002_keyper_4\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[0]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-shutter_api_gnosis_1002_keyper_5\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-shutter_api_gnosis_1002_keyper_5\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[0]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-shutter_api_gnosis_1002_service_kpr_1\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-shutter_api_gnosis_1002_service_kpr_1\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-shutter_api_gnosis_1002_service_kpr_2\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-shutter_api_gnosis_1002_service_kpr_2\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-shutter_api_gnosis_1003_keyper_1\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-shutter_api_gnosis_1003_keyper_1\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-shutter_api_gnosis_1003_keyper_2\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-shutter_api_gnosis_1003_keyper_2\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-shutter_api_gnosis_1003_keyper_3\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-shutter_api_gnosis_1003_keyper_3\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-shutter_api_gnosis_1003_keyper_4\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-shutter_api_gnosis_1003_keyper_4\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-shutter_api_gnosis_1003_keyper_5\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-shutter_api_gnosis_1003_keyper_5\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-shutterizooor2\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-shutterizooor2\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"deployment_type\":\"shutter-compose\",\"instance\":\"kpr-stevestanzak\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{deployment_type=\\\"shutter-compose\\\", instance=\\\"kpr-stevestanzak\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[1]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"instance\":\"set1-keyper1\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{instance=\\\"set1-keyper1\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[0]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"instance\":\"set1-keyper2\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{instance=\\\"set1-keyper2\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[0]]}},{\"schema\":{\"refId\":\"A\",\"meta\":{\"type\":\"numeric-multi\",\"typeVersion\":[0,1],\"custom\":{\"resultType\":\"vector\"}},\"fields\":[{\"name\":\"Time\",\"type\":\"time\",\"typeInfo\":{\"frame\":\"time.Time\"},\"config\":{\"interval\":60000}},{\"name\":\"Value\",\"type\":\"number\",\"typeInfo\":{\"frame\":\"float64\"},\"labels\":{\"instance\":\"set1-keyper3\",\"job\":\"keyper\",\"network\":\"mainnet\"},\"config\":{\"displayNameFromDS\":\"{instance=\\\"set1-keyper3\\\", job=\\\"keyper\\\", network=\\\"mainnet\\\"}\"}}]},\"data\":{\"values\":[[1791342372165],[0]]}}]}}}\n",
-            "tool_call_id": "call_q0ptzmog"
+            "tool_call_id": "call_6ivtowvw"
           },
           {
             "role": "assistant",
             "content": null,
             "tool_calls": [
               {
-                "id": "call_qeefzelm",
+                "id": "call_uy3ro6hx",
                 "type": "function",
                 "function": {
                   "name": "bash",
-                  "arguments": "{\"command\":\"curl -s -X POST \\\"$AGENT_SERVER_URL/messages/\\\" -H \\\"Content-Type: application/json\\\" -d '{\\\"userId\\\":\\\"88c8c928-404e-43a1-aa90-f493cc265c50\\\",\\\"text\\\":\\\"Keyper status: all systems operational. 30 of 39 keypers online (sample instance: kpr-dappnode-2-gnosis-keyper).\\\"}'\"}"
+                  "arguments": "{\"command\":\"curl -s -X POST \\\"$AGENT_SERVER_URL/messages/\\\" -H \\\"Content-Type: application/json\\\" -d '{\\\"userId\\\":\\\"35bc8d96-b5c6-45f1-ad37-fb241dafd732\\\",\\\"text\\\":\\\"Keyper status: all systems operational. 30 of 39 keypers online (sample instance: kpr-dappnode-2-gnosis-keyper).\\\"}'\"}"
                 }
               }
             ]
           },
           {
             "role": "tool",
-            "content": "{\"id\":\"964cbbb3-f91b-41e8-a895-564e1c6bd449\",\"userId\":\"88c8c928-404e-43a1-aa90-f493cc265c50\",\"direction\":\"outbound\",\"seq\":2,\"text\":\"Keyper status: all systems operational. 30 of 39 keypers online (sample instance: kpr-dappnode-2-gnosis-keyper).\",\"createdAt\":\"2026-10-07T03:28:14.063Z\"}",
-            "tool_call_id": "call_qeefzelm"
+            "content": "{\"id\":\"8944d643-36b4-477c-9c95-d540a644d165\",\"userId\":\"35bc8d96-b5c6-45f1-ad37-fb241dafd732\",\"direction\":\"outbound\",\"seq\":2,\"text\":\"Keyper status: all systems operational. 30 of 39 keypers online (sample instance: kpr-dappnode-2-gnosis-keyper).\",\"createdAt\":\"2026-10-07T05:54:56.859Z\"}",
+            "tool_call_id": "call_uy3ro6hx"
           }
         ],
         "stream": true,

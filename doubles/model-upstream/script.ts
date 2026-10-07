@@ -59,23 +59,28 @@ export function decideNextResponse(messages: unknown[]): ScriptDecision {
     return { type: "message", content: "Invalid messages format." };
   }
 
-  // Count how many tool results have been received in this conversation
-  const toolResults = messages.filter((m) => {
-    return typeof m === "object" && m !== null && (m as { role?: string }).role === "tool";
-  });
-
-  // Find user prompt to extract target userId if present
+  // Find the last user message to support multi-turn sessions
   let extractedUserId: string | undefined;
-  for (const m of messages) {
+  let lastUserIdx = -1;
+  for (let i = messages.length - 1; i >= 0; i--) {
+    const m = messages[i];
     if (typeof m === "object" && m !== null && (m as { role?: string }).role === "user") {
-      const text = extractText((m as { content?: unknown }).content);
-      const match = text.match(/User\s+([a-zA-Z0-9_-]+):/);
-      if (match) {
-        extractedUserId = match[1];
-        break;
+      if (lastUserIdx === -1) {
+        lastUserIdx = i;
+        const text = extractText((m as { content?: unknown }).content);
+        const match = text.match(/User\s+([a-zA-Z0-9_-]+):/);
+        if (match) {
+          extractedUserId = match[1];
+        }
       }
     }
   }
+
+  // Count tool results received in the current turn (since the last user prompt)
+  const currentTurnMessages = lastUserIdx >= 0 ? messages.slice(lastUserIdx + 1) : messages;
+  const toolResults = currentTurnMessages.filter((m) => {
+    return typeof m === "object" && m !== null && (m as { role?: string }).role === "tool";
+  });
 
   // Scenario 1: Standalone probe without a userId
   if (!extractedUserId) {

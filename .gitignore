@@ -10,3 +10,5 @@ node_modules/
 dist/
 *.tgz
 vendor/*.tgz
+# Temporary override files for weakened deployment checks
+checks/security/weakened/*.override.yml
