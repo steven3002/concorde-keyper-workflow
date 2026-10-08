@@ -1,10 +1,10 @@
-=== Run started at 2026-10-07T05:55:09Z for security ===
+=== Run started at 2026-10-08T00:33:06Z for security ===
 ==========================================================
 Starting Concorde Security Conditions Test Suite (s5)
 ==========================================================
 Resetting and starting fixture stack under project concorde-s5-security...
- Image concorde-s5-security-migrate Building 
  Image concorde-s5-security-gateway Building 
+ Image concorde-s5-security-migrate Building 
  Image concorde-s5-security-agent Building 
 #1 [internal] load local bake definitions
 #1 reading from stdin 2.67kB done
@@ -15,8 +15,8 @@ Resetting and starting fixture stack under project concorde-s5-security...
 #2 WARN: InvalidDefaultArgInFrom: Default value for ARG ${NODE_IMAGE} results in empty or invalid base image name (line 4)
 #2 DONE 0.0s
 
-#3 [migrate internal] load build definition from Dockerfile
-#3 transferring dockerfile: 2.50kB 0.0s done
+#3 [gateway internal] load build definition from Dockerfile
+#3 transferring dockerfile: 2.50kB done
 #3 WARN: InvalidDefaultArgInFrom: Default value for ARG ${NODE_IMAGE} results in empty or invalid base image name (line 8)
 #3 WARN: InvalidDefaultArgInFrom: Default value for ARG ${NODE_IMAGE} results in empty or invalid base image name (line 27)
 #3 WARN: InvalidDefaultArgInFrom: Default value for ARG ${NODE_IMAGE} results in empty or invalid base image name (line 45)
@@ -29,18 +29,18 @@ Resetting and starting fixture stack under project concorde-s5-security...
 #3 WARN: InvalidDefaultArgInFrom: Default value for ARG ${NODE_IMAGE} results in empty or invalid base image name (line 64)
 #3 DONE 0.1s
 
-#4 [migrate internal] load metadata for docker.io/library/node:24-alpine@sha256:ebfe2f90462722a7a4de65e91990e97fe0d401c70e0e762c5b53302f905ec1c1
+#4 [agent internal] load metadata for docker.io/library/node:24-alpine@sha256:ebfe2f90462722a7a4de65e91990e97fe0d401c70e0e762c5b53302f905ec1c1
 #4 DONE 0.1s
 
 #5 [agent internal] load .dockerignore
 #5 transferring context: 2B done
 #5 DONE 0.0s
 
-#6 [migrate internal] load .dockerignore
+#6 [gateway internal] load .dockerignore
 #6 transferring context: 2B done
 #6 DONE 0.0s
 
-#7 [gateway internal] load build context
+#7 [migrate internal] load build context
 #7 transferring context: 361B done
 #7 DONE 0.0s
 
@@ -58,110 +58,110 @@ Resetting and starting fixture stack under project concorde-s5-security...
 #11 CACHED
 
 #12 [agent] exporting to image
-#12 exporting layers 0.0s done
+#12 exporting layers done
 #12 exporting manifest sha256:dff853390deb588022c580690c5566a49635caf83d7e7b0ee03b4b0284f13692
 #12 ...
 
-#13 [gateway runtime 6/9] COPY tsconfig*.json ./
+#13 [gateway deps 4/5] COPY package*.json ./
 #13 CACHED
 
-#14 [gateway telegram-channel 3/4] WORKDIR /build/agent
+#14 [gateway runtime 7/9] COPY drizzle.config*.ts ./
 #14 CACHED
 
-#15 [gateway runtime 8/9] COPY --from=telegram-channel /out/telegram-channel ./telegram-channel
+#15 [gateway concorde 2/4] RUN apk add --no-cache git
 #15 CACHED
 
-#16 [gateway deps 2/5] WORKDIR /app
+#16 [gateway concorde 4/4] RUN git init     && git remote add origin "https://github.com/shutter-network/concorde.git"     && git fetch --depth 1 origin "03dda6a0b1a79077737342709f346bf463a94e20"     && git checkout FETCH_HEAD     && ACTUAL_SHA="$(git rev-parse HEAD)"     && if [ "${ACTUAL_SHA}" != "03dda6a0b1a79077737342709f346bf463a94e20" ]; then          echo "Commit mismatch for Concorde: expected 03dda6a0b1a79077737342709f346bf463a94e20, got ${ACTUAL_SHA}" >&2;          exit 1;        fi     && npm ci     && npm run build     && npm pack
 #16 CACHED
 
-#17 [gateway runtime 4/9] COPY --from=deps /app/vendor ./vendor
+#17 [gateway deps 5/5] RUN npm install --no-audit --no-fund
 #17 CACHED
 
-#18 [gateway deps 4/5] COPY package*.json ./
+#18 [gateway runtime 4/9] COPY --from=deps /app/vendor ./vendor
 #18 CACHED
 
-#19 [gateway deps 3/5] COPY --from=concorde /build/concorde/shutter-network-concorde-0.1.0.tgz ./vendor/shutter-network-concorde-0.1.0.tgz
+#19 [gateway runtime 3/9] COPY --from=deps /app/node_modules ./node_modules
 #19 CACHED
 
-#20 [gateway runtime 3/9] COPY --from=deps /app/node_modules ./node_modules
+#20 [gateway runtime 8/9] COPY --from=telegram-channel /out/telegram-channel ./telegram-channel
 #20 CACHED
 
-#21 [gateway telegram-channel 2/4] RUN apk add --no-cache git
+#21 [gateway telegram-channel 4/4] RUN git init     && git remote add origin "https://github.com/shutter-network/keyper-concorde-agent.git"     && git fetch --depth 1 origin "f5a5c17e1f39570f84d953bb46dba0f35f15b3dc"     && git checkout FETCH_HEAD     && ACTUAL_SHA="$(git rev-parse HEAD)"     && if [ "${ACTUAL_SHA}" != "f5a5c17e1f39570f84d953bb46dba0f35f15b3dc" ]; then          echo "Commit mismatch for keyper agent: expected f5a5c17e1f39570f84d953bb46dba0f35f15b3dc, got ${ACTUAL_SHA}" >&2;          exit 1;        fi     && mkdir -p /out     && cp -r telegram-channel /out/
 #21 CACHED
 
-#22 [gateway telegram-channel 4/4] RUN git init     && git remote add origin "https://github.com/shutter-network/keyper-concorde-agent.git"     && git fetch --depth 1 origin "f5a5c17e1f39570f84d953bb46dba0f35f15b3dc"     && git checkout FETCH_HEAD     && ACTUAL_SHA="$(git rev-parse HEAD)"     && if [ "${ACTUAL_SHA}" != "f5a5c17e1f39570f84d953bb46dba0f35f15b3dc" ]; then          echo "Commit mismatch for keyper agent: expected f5a5c17e1f39570f84d953bb46dba0f35f15b3dc, got ${ACTUAL_SHA}" >&2;          exit 1;        fi     && mkdir -p /out     && cp -r telegram-channel /out/
+#22 [gateway telegram-channel 2/4] RUN apk add --no-cache git
 #22 CACHED
 
-#23 [gateway concorde 4/4] RUN git init     && git remote add origin "https://github.com/shutter-network/concorde.git"     && git fetch --depth 1 origin "03dda6a0b1a79077737342709f346bf463a94e20"     && git checkout FETCH_HEAD     && ACTUAL_SHA="$(git rev-parse HEAD)"     && if [ "${ACTUAL_SHA}" != "03dda6a0b1a79077737342709f346bf463a94e20" ]; then          echo "Commit mismatch for Concorde: expected 03dda6a0b1a79077737342709f346bf463a94e20, got ${ACTUAL_SHA}" >&2;          exit 1;        fi     && npm ci     && npm run build     && npm pack
+#23 [gateway telegram-channel 3/4] WORKDIR /build/agent
 #23 CACHED
 
-#24 [gateway concorde 3/4] WORKDIR /build/concorde
+#24 [gateway runtime 5/9] COPY package*.json ./
 #24 CACHED
 
-#25 [gateway concorde 2/4] RUN apk add --no-cache git
+#25 [gateway deps 2/5] WORKDIR /app
 #25 CACHED
 
-#26 [gateway deps 5/5] RUN npm install --no-audit --no-fund
+#26 [gateway deps 3/5] COPY --from=concorde /build/concorde/shutter-network-concorde-0.1.0.tgz ./vendor/shutter-network-concorde-0.1.0.tgz
 #26 CACHED
 
-#27 [gateway runtime 5/9] COPY package*.json ./
+#27 [gateway concorde 3/4] WORKDIR /build/concorde
 #27 CACHED
 
-#28 [gateway runtime 7/9] COPY drizzle.config*.ts ./
+#28 [gateway runtime 6/9] COPY tsconfig*.json ./
 #28 CACHED
 
-#29 [migrate runtime 9/9] COPY src ./src
+#29 [gateway runtime 9/9] COPY src ./src
 #29 CACHED
 
 #12 [agent] exporting to image
 #12 exporting manifest sha256:dff853390deb588022c580690c5566a49635caf83d7e7b0ee03b4b0284f13692 done
 #12 exporting config sha256:98cd07313855ed1dae7b97b5a1b2bb973dfc0f1e66ad00b7f167319fc733e059 0.0s done
-#12 exporting attestation manifest sha256:c420d133e231924c5e50d7c13bb7a0c095c65a86b3f866851a4390d02303f94c
-#12 exporting attestation manifest sha256:c420d133e231924c5e50d7c13bb7a0c095c65a86b3f866851a4390d02303f94c 0.1s done
-#12 exporting manifest list sha256:eee47be7b1bb530c3f34632d6385d47bca15b2a8c240abb1d1963b0c5a14c97c 0.1s done
+#12 exporting attestation manifest sha256:e8d3adda62c4b741795ba5289443e792bffcbd7b68e74ea27fcd253971da0b9f
+#12 exporting attestation manifest sha256:e8d3adda62c4b741795ba5289443e792bffcbd7b68e74ea27fcd253971da0b9f 0.1s done
+#12 exporting manifest list sha256:9b22bb173e429a396cc031e1d34998c319143710750024be458beae46208cc5b 0.1s done
 #12 naming to docker.io/library/concorde-s5-security-agent:latest
 #12 naming to docker.io/library/concorde-s5-security-agent:latest 0.0s done
 #12 unpacking to docker.io/library/concorde-s5-security-agent:latest 0.1s done
-#12 DONE 0.4s
+#12 DONE 0.5s
 
-#30 [migrate] exporting to image
-#30 exporting layers done
-#30 exporting manifest sha256:da7419e1e55f1309453afefc2c2ce20e45be04b9ed937f6004031acb9e64095e 0.0s done
-#30 exporting config sha256:9bb0ec3c2ba749cfec430a5d7b5f0d1b67c57fccd5a2c67fd08286a06a83acce 0.0s done
-#30 exporting attestation manifest sha256:9c360e84566970bcad7407b4f6f4a5bfae3570708c267c9acbd85936d99fb57a 0.1s done
-#30 exporting manifest list sha256:18ca77080ba2cdbaf7771fa021146ecd6c1f5eb0a0f9a092cda65dd7b30ded98 0.1s done
-#30 naming to docker.io/library/concorde-s5-security-migrate:latest 0.0s done
-#30 unpacking to docker.io/library/concorde-s5-security-migrate:latest 0.0s done
-#30 DONE 0.4s
+#30 [gateway] exporting to image
+#30 exporting layers 0.0s done
+#30 exporting manifest sha256:361292f5c98d0128c80330e6bfaedc931b4273b6b740ac36b47825d3f3d583c4 0.0s done
+#30 exporting config sha256:f9f8e4751ba2da18c80cc428ef876a8a951b726972553457473eccdee39d9ffa 0.0s done
+#30 exporting attestation manifest sha256:c6c79ac7f7c44f6b6d94993b1ee87aa6e65a97f382f02145596ca2c23f728aaa 0.1s done
+#30 exporting manifest list sha256:5f01487e8e832340a4cd9ec4624aebcd3cb0ce0d42bf0eb10aadd260d7b13854 0.1s done
+#30 naming to docker.io/library/concorde-s5-security-gateway:latest 0.0s done
+#30 unpacking to docker.io/library/concorde-s5-security-gateway:latest 0.0s done
+#30 DONE 0.5s
 
-#31 [gateway] exporting to image
+#31 [migrate] exporting to image
 #31 exporting layers 0.0s done
-#31 exporting manifest sha256:361292f5c98d0128c80330e6bfaedc931b4273b6b740ac36b47825d3f3d583c4 0.0s done
-#31 exporting config sha256:f9f8e4751ba2da18c80cc428ef876a8a951b726972553457473eccdee39d9ffa 0.0s done
-#31 exporting attestation manifest sha256:8539e5ee115d50360ee3e2cf0c5a84a43567f83e312f018121f061ee892e2e9f 0.1s done
-#31 exporting manifest list sha256:c79d3ab4e8112c670ae38baff84b49bfe554450784f563f322bfa86ac2084600 0.1s done
-#31 naming to docker.io/library/concorde-s5-security-gateway:latest done
-#31 unpacking to docker.io/library/concorde-s5-security-gateway:latest 0.1s done
+#31 exporting manifest sha256:da7419e1e55f1309453afefc2c2ce20e45be04b9ed937f6004031acb9e64095e 0.0s done
+#31 exporting config sha256:9bb0ec3c2ba749cfec430a5d7b5f0d1b67c57fccd5a2c67fd08286a06a83acce 0.0s done
+#31 exporting attestation manifest sha256:fe507f8acc4db636a8f6db073d225e9c38d2c0c06e26d0b367bdc6c0fc55457e 0.1s done
+#31 exporting manifest list sha256:997da1a8d178441dc47b7064fcff4558ea200f90cf5c18344489f7c5b6ad2a85 0.1s done
+#31 naming to docker.io/library/concorde-s5-security-migrate:latest 0.0s done
+#31 unpacking to docker.io/library/concorde-s5-security-migrate:latest 0.0s done
 #31 DONE 0.5s
 
 #32 [agent] resolving provenance for metadata file
-#32 DONE 0.0s
+#32 DONE 0.1s
 
 #33 [migrate] resolving provenance for metadata file
-#33 DONE 0.0s
+#33 DONE 0.1s
 
 #34 [gateway] resolving provenance for metadata file
 #34 DONE 0.0s
- Image concorde-s5-security-gateway Built 
  Image concorde-s5-security-agent Built 
  Image concorde-s5-security-migrate Built 
+ Image concorde-s5-security-gateway Built 
+ Container concorde-s5-security-bot-api-1 Running 
+ Container concorde-s5-security-canary-1 Running 
+ Container concorde-s5-security-model-upstream-1 Running 
  Container concorde-s5-security-metrics-gate-1 Running 
  Container concorde-s5-security-agent-1 Running 
  Container concorde-s5-security-gateway-1 Running 
  Container concorde-s5-security-metrics-fixture-1 Running 
- Container concorde-s5-security-model-upstream-1 Running 
- Container concorde-s5-security-bot-api-1 Running 
- Container concorde-s5-security-canary-1 Running 
  Container concorde-s5-security-postgres-1 Running 
  Container concorde-s5-security-relay-1 Running 
  Container concorde-s5-security-postgres-1 Waiting 
@@ -197,11 +197,11 @@ Restoring hardened agent container...
 
 === Step 2: Condition S2 (Prohibited Destination Unreachable) ===
 === Running Condition S2: Prohibited destinations are unreachable ===
-Target canary IP on egress network: 172.20.0.3
+Target canary IP on egress network: 172.20.0.4
 Probing prohibited destinations from agent container...
 Probing prohibited destinations from agent container...
 BLOCKED: Canary by name -> name resolution failed (NXDOMAIN / SERVFAIL)
-BLOCKED: Canary by IP address -> connection failed (code 7: curl: (7) Failed to connect to 172.20.0.3:8080 after 0 ms: Could not connect to server)
+BLOCKED: Canary by IP address -> connection failed (code 7: curl: (7) Failed to connect to 172.20.0.4:8080 after 0 ms: Could not connect to server)
 BLOCKED: Public IP address -> connection failed (code 7: curl: (7) Failed to connect to 1.1.1.1:80 after 0 ms: Could not connect to server)
 BLOCKED: External DNS name -> name resolution failed (NXDOMAIN / SERVFAIL)
 PASSED: All prohibited destinations are unreachable from the agent
@@ -230,16 +230,16 @@ Restoring hardened agent container...
 === Step 3: Condition S3 (Excluded Internal Services & Docker Host) ===
 === Running Condition S3: Excluded internal services and Docker host unreachable ===
 Starting host listener on port 39485 in host network namespace...
-Collected host candidate addresses to probe: 172.19.0.1,172.17.0.1,127.0.0.1,172.16.0.4,172.17.0.1,172.18.0.1,10.42.0.0,10.42.0.1,172.20.0.1,172.21.0.1
+Collected host candidate addresses to probe: 172.21.0.1,172.17.0.1,127.0.0.1,172.16.0.4,172.17.0.1,172.18.0.1,10.42.0.0,10.42.0.1,172.19.0.1,172.20.0.1
 Running in-container internal services probe from agent...
 Probing excluded internal services from agent container...
 BLOCKED: PostgreSQL (postgres:5432) -> name resolution failed (NXDOMAIN / SERVFAIL)
 BLOCKED: Model upstream stand-in (model-upstream:8080) -> name resolution failed (NXDOMAIN / SERVFAIL)
 BLOCKED: Metrics fixture double (metrics-fixture:8080) -> name resolution failed (NXDOMAIN / SERVFAIL)
 BLOCKED: Bot API stand-in (bot-api:8080) -> name resolution failed (NXDOMAIN / SERVFAIL)
-BLOCKED: Gateway public server (gateway:8081) -> connection failed (code 7: curl: (7) Failed to connect to gateway:8081 after 1 ms: Could not connect to server)
+BLOCKED: Gateway public server (gateway:8081) -> connection failed (code 7: curl: (7) Failed to connect to gateway:8081 after 0 ms: Could not connect to server)
 Probing Docker host candidates on port 39485...
-BLOCKED: Host candidate (172.19.0.1) (172.19.0.1:39485) -> connection failed (code 7: curl: (7) Failed to connect to 172.19.0.1:39485 after 0 ms: Could not connect to server)
+BLOCKED: Host candidate (172.21.0.1) (172.21.0.1:39485) -> connection failed (code 7: curl: (7) Failed to connect to 172.21.0.1:39485 after 0 ms: Could not connect to server)
 BLOCKED: Host candidate (172.17.0.1) (172.17.0.1:39485) -> connection failed (code 7: curl: (7) Failed to connect to 172.17.0.1:39485 after 0 ms: Could not connect to server)
 BLOCKED: Host candidate (127.0.0.1) (127.0.0.1:39485) -> connection failed (code 7: curl: (7) Failed to connect to 127.0.0.1:39485 after 0 ms: Could not connect to server)
 BLOCKED: Host candidate (172.16.0.4) (172.16.0.4:39485) -> connection failed (code 7: curl: (7) Failed to connect to 172.16.0.4:39485 after 0 ms: Could not connect to server)
@@ -247,15 +247,15 @@ BLOCKED: Host candidate (172.17.0.1) (172.17.0.1:39485) -> connection failed (co
 BLOCKED: Host candidate (172.18.0.1) (172.18.0.1:39485) -> connection failed (code 7: curl: (7) Failed to connect to 172.18.0.1:39485 after 0 ms: Could not connect to server)
 BLOCKED: Host candidate (10.42.0.0) (10.42.0.0:39485) -> connection failed (code 7: curl: (7) Failed to connect to 10.42.0.0:39485 after 0 ms: Could not connect to server)
 BLOCKED: Host candidate (10.42.0.1) (10.42.0.1:39485) -> connection failed (code 7: curl: (7) Failed to connect to 10.42.0.1:39485 after 0 ms: Could not connect to server)
+BLOCKED: Host candidate (172.19.0.1) (172.19.0.1:39485) -> connection failed (code 7: curl: (7) Failed to connect to 172.19.0.1:39485 after 0 ms: Could not connect to server)
 BLOCKED: Host candidate (172.20.0.1) (172.20.0.1:39485) -> connection failed (code 7: curl: (7) Failed to connect to 172.20.0.1:39485 after 0 ms: Could not connect to server)
-BLOCKED: Host candidate (172.21.0.1) (172.21.0.1:39485) -> connection failed (code 7: curl: (7) Failed to connect to 172.21.0.1:39485 after 0 ms: Could not connect to server)
 BLOCKED: Special host name (host.docker.internal) (host.docker.internal:39485) -> name resolution failed (NXDOMAIN / SERVFAIL)
 PASSED: All excluded internal services and Docker host are unreachable from agent
 Confirmed: PostgreSQL, model-upstream, metrics-fixture, bot-api, gateway public, and Docker host all failed to connect.
 Confirmed: Host listener recorded zero connections from agent.
 Testing Control for Docker Host (M-02): Starting container on plain internal network...
 Plain internal network gateway address: 172.22.0.1
-Control verified (M-02): Host listener was successfully reached from plain internal network (HIT 172.22.0.2:33425).
+Control verified (M-02): Host listener was successfully reached from plain internal network (HIT 172.22.0.2:35155).
 Testing Controls for other excluded services...
 Control: PostgreSQL is reachable from gateway on concorde_db network.
 Control: Model upstream is reachable from relay on concorde_egress network.
@@ -317,9 +317,9 @@ Stopping model relay container...
  Container concorde-s5-security-relay-1 Stopping 
  Container concorde-s5-security-relay-1 Stopped 
 Relay container stopped.
-Injecting message while relay is down (update_id 1791352543)...
+Injecting message while relay is down (update_id 1791419624)...
 Waiting for canned failure notification to arrive via Telegram (bound: 45s)...
-Failure response delivered within 35s (bound was 45s).
+Failure response delivered within 36s (bound was 45s).
 Sent messages recorded at bot-api:
 {
   "ok": true,
@@ -328,7 +328,7 @@ Sent messages recorded at bot-api:
       "messageId": 1,
       "chatId": "100000001",
       "text": "I am unable to process your request at this time. Please try again later.",
-      "recordedAt": "2026-10-07T05:56:18.115Z"
+      "recordedAt": "2026-10-08T00:34:19.312Z"
     }
   ]
 }
@@ -338,7 +338,7 @@ Confirmed: Zero requests reached model upstream during outage; no direct-provide
 Restarting relay container...
  Container concorde-s5-security-relay-1 Starting 
  Container concorde-s5-security-relay-1 Started 
-Injecting normal query after relay restart (update_id 1791352544)...
+Injecting normal query after relay restart (update_id 1791419625)...
 Waiting for normal status reply after relay recovery (bound: 60s)...
 Confirmed: Stack recovered cleanly and answered subsequent status query normally.
 [PASS] S5 Relay stopped failure - Stopping relay causes bounded failure notification; 0 upstream requests; stack recovers on restart

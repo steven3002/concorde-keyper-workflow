@@ -1,4 +1,4 @@
-=== Run started at 2026-10-07T05:51:58Z for upstream-channel ===
+=== Run started at 2026-10-08T00:29:38Z for upstream-channel ===
  Image concorde-channel-tests-channel-tests Building 
 #1 [internal] load local bake definitions
 #1 reading from stdin 1.09kB done
@@ -14,7 +14,7 @@
 #2 DONE 0.0s
 
 #3 [internal] load metadata for docker.io/library/node:24-alpine@sha256:ebfe2f90462722a7a4de65e91990e97fe0d401c70e0e762c5b53302f905ec1c1
-#3 DONE 0.1s
+#3 DONE 0.0s
 
 #4 [internal] load .dockerignore
 #4 transferring context: 2B done
@@ -25,49 +25,49 @@
 #5 DONE 0.0s
 
 #6 [internal] load build context
-#6 transferring context: 67B 0.0s done
+#6 transferring context: 67B done
 #6 DONE 0.0s
 
-#7 [channel-tests 6/7] COPY tsconfig*.json ./
+#7 [channel-tests 4/7] COPY --from=deps /app/vendor ./vendor
 #7 CACHED
 
-#8 [deps 3/5] COPY --from=concorde /build/concorde/shutter-network-concorde-0.1.0.tgz ./vendor/shutter-network-concorde-0.1.0.tgz
+#8 [concorde 3/4] WORKDIR /build/concorde
 #8 CACHED
 
 #9 [channel-tests 3/7] COPY --from=deps /app/node_modules ./node_modules
 #9 CACHED
 
-#10 [concorde 4/4] RUN git init     && git remote add origin "https://github.com/shutter-network/concorde.git"     && git fetch --depth 1 origin "03dda6a0b1a79077737342709f346bf463a94e20"     && git checkout FETCH_HEAD     && ACTUAL_SHA="$(git rev-parse HEAD)"     && if [ "${ACTUAL_SHA}" != "03dda6a0b1a79077737342709f346bf463a94e20" ]; then          echo "Commit mismatch for Concorde: expected 03dda6a0b1a79077737342709f346bf463a94e20, got ${ACTUAL_SHA}" >&2;          exit 1;        fi     && npm ci     && npm run build     && npm pack
+#10 [channel-tests 6/7] COPY tsconfig*.json ./
 #10 CACHED
 
-#11 [channel-tests 4/7] COPY --from=deps /app/vendor ./vendor
+#11 [deps 4/5] COPY package*.json ./
 #11 CACHED
 
-#12 [deps 2/5] WORKDIR /app
+#12 [concorde 2/4] RUN apk add --no-cache git
 #12 CACHED
 
-#13 [concorde 2/4] RUN apk add --no-cache git
+#13 [deps 5/5] RUN npm install --no-audit --no-fund
 #13 CACHED
 
-#14 [deps 4/5] COPY package*.json ./
+#14 [deps 3/5] COPY --from=concorde /build/concorde/shutter-network-concorde-0.1.0.tgz ./vendor/shutter-network-concorde-0.1.0.tgz
 #14 CACHED
 
-#15 [telegram-channel 3/4] WORKDIR /build/agent
+#15 [concorde 4/4] RUN git init     && git remote add origin "https://github.com/shutter-network/concorde.git"     && git fetch --depth 1 origin "03dda6a0b1a79077737342709f346bf463a94e20"     && git checkout FETCH_HEAD     && ACTUAL_SHA="$(git rev-parse HEAD)"     && if [ "${ACTUAL_SHA}" != "03dda6a0b1a79077737342709f346bf463a94e20" ]; then          echo "Commit mismatch for Concorde: expected 03dda6a0b1a79077737342709f346bf463a94e20, got ${ACTUAL_SHA}" >&2;          exit 1;        fi     && npm ci     && npm run build     && npm pack
 #15 CACHED
 
-#16 [telegram-channel 2/4] RUN apk add --no-cache git
+#16 [deps 2/5] WORKDIR /app
 #16 CACHED
 
-#17 [telegram-channel 4/4] RUN git init     && git remote add origin "https://github.com/shutter-network/keyper-concorde-agent.git"     && git fetch --depth 1 origin "f5a5c17e1f39570f84d953bb46dba0f35f15b3dc"     && git checkout FETCH_HEAD     && ACTUAL_SHA="$(git rev-parse HEAD)"     && if [ "${ACTUAL_SHA}" != "f5a5c17e1f39570f84d953bb46dba0f35f15b3dc" ]; then          echo "Commit mismatch for keyper agent: expected f5a5c17e1f39570f84d953bb46dba0f35f15b3dc, got ${ACTUAL_SHA}" >&2;          exit 1;        fi     && mkdir -p /out     && cp -r telegram-channel /out/
+#17 [channel-tests 5/7] COPY package*.json ./
 #17 CACHED
 
-#18 [deps 5/5] RUN npm install --no-audit --no-fund
+#18 [telegram-channel 2/4] RUN apk add --no-cache git
 #18 CACHED
 
-#19 [channel-tests 5/7] COPY package*.json ./
+#19 [telegram-channel 3/4] WORKDIR /build/agent
 #19 CACHED
 
-#20 [concorde 3/4] WORKDIR /build/concorde
+#20 [telegram-channel 4/4] RUN git init     && git remote add origin "https://github.com/shutter-network/keyper-concorde-agent.git"     && git fetch --depth 1 origin "f5a5c17e1f39570f84d953bb46dba0f35f15b3dc"     && git checkout FETCH_HEAD     && ACTUAL_SHA="$(git rev-parse HEAD)"     && if [ "${ACTUAL_SHA}" != "f5a5c17e1f39570f84d953bb46dba0f35f15b3dc" ]; then          echo "Commit mismatch for keyper agent: expected f5a5c17e1f39570f84d953bb46dba0f35f15b3dc, got ${ACTUAL_SHA}" >&2;          exit 1;        fi     && mkdir -p /out     && cp -r telegram-channel /out/
 #20 CACHED
 
 #21 [channel-tests 7/7] COPY --from=telegram-channel /out/telegram-channel ./telegram-channel
@@ -77,9 +77,9 @@
 #22 exporting layers done
 #22 exporting manifest sha256:b3fc32ae571c83682bef5b61d9e6b25cb2121d096ede39846f2024a164901661 done
 #22 exporting config sha256:d529ac37e5baf5b09c077ddcedeb609aab5892a857edcfb0058ac729bd75aed3 done
-#22 exporting attestation manifest sha256:701ebd30dadb4b770c1cc1e26da9a9ac968d7e932fa0b7f749bdd0e2ae4516bb
-#22 exporting attestation manifest sha256:701ebd30dadb4b770c1cc1e26da9a9ac968d7e932fa0b7f749bdd0e2ae4516bb 0.0s done
-#22 exporting manifest list sha256:7a2264defe3aff854af1a7fe7e0b96a44d78c468402e72df5290a23c82a66c64 0.0s done
+#22 exporting attestation manifest sha256:b31f4a4bc1df294f9088326976ef7e4c60c7aba4f4c4a965bbe1767267a129de 0.0s done
+#22 exporting manifest list sha256:6a4e0371d01003c839a38f8a41d3aff86a1d1db65f6906875e223c7f9b3aad0d
+#22 exporting manifest list sha256:6a4e0371d01003c839a38f8a41d3aff86a1d1db65f6906875e223c7f9b3aad0d 0.0s done
 #22 naming to docker.io/library/concorde-channel-tests-channel-tests:latest done
 #22 unpacking to docker.io/library/concorde-channel-tests-channel-tests:latest 0.0s done
 #22 DONE 0.2s
@@ -117,6 +117,8 @@ postgres-1  | selecting default time zone ... Etc/UTC
 postgres-1  | creating configuration files ... ok
 postgres-1  | running bootstrap script ... ok
 postgres-1  | performing post-bootstrap initialization ... ok
+postgres-1  | initdb: warning: enabling "trust" authentication for local connections
+postgres-1  | initdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next time you run initdb.
 postgres-1  | syncing data to disk ... ok
 postgres-1  | 
 postgres-1  | 
@@ -124,84 +126,82 @@ postgres-1  | Success. You can now start the database server using:
 postgres-1  | 
 postgres-1  |     pg_ctl -D /var/lib/postgresql/data -l logfile start
 postgres-1  | 
-postgres-1  | initdb: warning: enabling "trust" authentication for local connections
-postgres-1  | initdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next time you run initdb.
-postgres-1  | waiting for server to start....2026-10-07 05:52:02.819 UTC [56] LOG:  starting PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit
-postgres-1  | 2026-10-07 05:52:02.826 UTC [56] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
-postgres-1  | 2026-10-07 05:52:02.842 UTC [59] LOG:  database system was shut down at 2026-10-07 05:52:01 UTC
-postgres-1  | 2026-10-07 05:52:02.851 UTC [56] LOG:  database system is ready to accept connections
+postgres-1  | waiting for server to start....2026-10-08 00:29:42.124 UTC [54] LOG:  starting PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit
+postgres-1  | 2026-10-08 00:29:42.130 UTC [54] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+postgres-1  | 2026-10-08 00:29:42.149 UTC [57] LOG:  database system was shut down at 2026-10-08 00:29:41 UTC
+postgres-1  | 2026-10-08 00:29:42.157 UTC [54] LOG:  database system is ready to accept connections
 postgres-1  |  done
 postgres-1  | server started
 postgres-1  | 
 postgres-1  | /usr/local/bin/docker-entrypoint.sh: ignoring /docker-entrypoint-initdb.d/*
 postgres-1  | 
-postgres-1  | 2026-10-07 05:52:02.925 UTC [56] LOG:  received fast shutdown request
-postgres-1  | waiting for server to shut down....2026-10-07 05:52:02.931 UTC [56] LOG:  aborting any active transactions
-postgres-1  | 2026-10-07 05:52:02.939 UTC [56] LOG:  background worker "logical replication launcher" (PID 62) exited with exit code 1
-postgres-1  | 2026-10-07 05:52:02.939 UTC [57] LOG:  shutting down
-postgres-1  | 2026-10-07 05:52:02.947 UTC [57] LOG:  checkpoint starting: shutdown immediate
-postgres-1  | 2026-10-07 05:52:02.977 UTC [57] LOG:  checkpoint complete: wrote 3 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.008 s, sync=0.004 s, total=0.038 s; sync files=2, longest=0.002 s, average=0.002 s; distance=0 kB, estimate=0 kB; lsn=0/14EF800, redo lsn=0/14EF800
-postgres-1  | 2026-10-07 05:52:02.982 UTC [56] LOG:  database system is shut down
+postgres-1  | waiting for server to shut down...2026-10-08 00:29:42.225 UTC [54] LOG:  received fast shutdown request
+postgres-1  | .2026-10-08 00:29:42.231 UTC [54] LOG:  aborting any active transactions
+postgres-1  | 2026-10-08 00:29:42.234 UTC [54] LOG:  background worker "logical replication launcher" (PID 60) exited with exit code 1
+postgres-1  | 2026-10-08 00:29:42.234 UTC [55] LOG:  shutting down
+postgres-1  | 2026-10-08 00:29:42.239 UTC [55] LOG:  checkpoint starting: shutdown immediate
+postgres-1  | 2026-10-08 00:29:42.265 UTC [55] LOG:  checkpoint complete: wrote 3 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.008 s, sync=0.003 s, total=0.031 s; sync files=2, longest=0.002 s, average=0.002 s; distance=0 kB, estimate=0 kB; lsn=0/14EF800, redo lsn=0/14EF800
+postgres-1  | 2026-10-08 00:29:42.269 UTC [54] LOG:  database system is shut down
 postgres-1  |  done
 postgres-1  | server stopped
 postgres-1  | 
 postgres-1  | PostgreSQL init process complete; ready for start up.
 postgres-1  | 
-postgres-1  | 2026-10-07 05:52:03.056 UTC [1] LOG:  starting PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit
-postgres-1  | 2026-10-07 05:52:03.056 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
-postgres-1  | 2026-10-07 05:52:03.057 UTC [1] LOG:  listening on IPv6 address "::", port 5432
-postgres-1  | 2026-10-07 05:52:03.071 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
-postgres-1  | 2026-10-07 05:52:03.084 UTC [70] LOG:  database system was shut down at 2026-10-07 05:52:02 UTC
-postgres-1  | 2026-10-07 05:52:03.095 UTC [1] LOG:  database system is ready to accept connections
+postgres-1  | 2026-10-08 00:29:42.351 UTC [1] LOG:  starting PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit
+postgres-1  | 2026-10-08 00:29:42.351 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+postgres-1  | 2026-10-08 00:29:42.351 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+postgres-1  | 2026-10-08 00:29:42.362 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+postgres-1  | 2026-10-08 00:29:42.397 UTC [68] LOG:  database system was shut down at 2026-10-08 00:29:42 UTC
+postgres-1  | 2026-10-08 00:29:42.406 UTC [1] LOG:  database system is ready to accept connections
  Container concorde-channel-tests-postgres-1 Healthy 
  Container concorde-channel-tests-channel-tests-1 Starting 
  Container concorde-channel-tests-channel-tests-1 Started 
 channel-tests-1  | [⣷] Pulling schema from database...
 channel-tests-1  | [2K[1G[✓] Pulling schema from database...
 channel-tests-1  | ▶ recording chats
-channel-tests-1  |   ✔ maps a chat to a User and back (54.696699ms)
-postgres-1       | 2026-10-07 05:52:08.190 UTC [116] ERROR:  duplicate key value violates unique constraint "chats_chat_id_unique"
-postgres-1       | 2026-10-07 05:52:08.190 UTC [116] DETAIL:  Key (chat_id)=(1001) already exists.
-postgres-1       | 2026-10-07 05:52:08.190 UTC [116] STATEMENT:  insert into "keyper_telegram_channel"."chats" ("user_id", "chat_id", "recorded_at") values ($1, $2, default)
-channel-tests-1  |   ✔ refuses a chat that already belongs to another User (10.274348ms)
-postgres-1       | 2026-10-07 05:52:08.218 UTC [116] ERROR:  duplicate key value violates unique constraint "chats_pkey"
-postgres-1       | 2026-10-07 05:52:08.218 UTC [116] DETAIL:  Key (user_id)=(0a62d993-d89a-4311-988f-18089e782d83) already exists.
-postgres-1       | 2026-10-07 05:52:08.218 UTC [116] STATEMENT:  insert into "keyper_telegram_channel"."chats" ("user_id", "chat_id", "recorded_at") values ($1, $2, default)
-channel-tests-1  |   ✔ refuses a second chat for the same User (27.280526ms)
-postgres-1       | 2026-10-07 05:52:08.228 UTC [116] ERROR:  insert or update on table "chats" violates foreign key constraint "chats_user_id_users_id_fk"
-postgres-1       | 2026-10-07 05:52:08.228 UTC [116] DETAIL:  Key (user_id)=(e2d4af43-709b-4c7f-9378-f84b38ac6cae) is not present in table "users".
-postgres-1       | 2026-10-07 05:52:08.228 UTC [116] STATEMENT:  insert into "keyper_telegram_channel"."chats" ("user_id", "chat_id", "recorded_at") values ($1, $2, default)
-channel-tests-1  |   ✔ refuses a malformed chat id and a User that does not exist (7.671638ms)
-channel-tests-1  | ✔ recording chats (303.105863ms)
+channel-tests-1  |   ✔ maps a chat to a User and back (264.243205ms)
+postgres-1       | 2026-10-08 00:29:47.493 UTC [105] ERROR:  duplicate key value violates unique constraint "chats_chat_id_unique"
+postgres-1       | 2026-10-08 00:29:47.493 UTC [105] DETAIL:  Key (chat_id)=(1001) already exists.
+postgres-1       | 2026-10-08 00:29:47.493 UTC [105] STATEMENT:  insert into "keyper_telegram_channel"."chats" ("user_id", "chat_id", "recorded_at") values ($1, $2, default)
+channel-tests-1  |   ✔ refuses a chat that already belongs to another User (39.481209ms)
+postgres-1       | 2026-10-08 00:29:47.542 UTC [105] ERROR:  duplicate key value violates unique constraint "chats_pkey"
+postgres-1       | 2026-10-08 00:29:47.542 UTC [105] DETAIL:  Key (user_id)=(0883c079-641f-4350-ad52-086da5b0bbe5) already exists.
+postgres-1       | 2026-10-08 00:29:47.542 UTC [105] STATEMENT:  insert into "keyper_telegram_channel"."chats" ("user_id", "chat_id", "recorded_at") values ($1, $2, default)
+channel-tests-1  |   ✔ refuses a second chat for the same User (51.05313ms)
+postgres-1       | 2026-10-08 00:29:47.589 UTC [105] ERROR:  insert or update on table "chats" violates foreign key constraint "chats_user_id_users_id_fk"
+postgres-1       | 2026-10-08 00:29:47.589 UTC [105] DETAIL:  Key (user_id)=(d1bf74b3-0aa3-4513-b149-d26121b734d3) is not present in table "users".
+postgres-1       | 2026-10-08 00:29:47.589 UTC [105] STATEMENT:  insert into "keyper_telegram_channel"."chats" ("user_id", "chat_id", "recorded_at") values ($1, $2, default)
+channel-tests-1  |   ✔ refuses a malformed chat id and a User that does not exist (44.051519ms)
+channel-tests-1  | ✔ recording chats (1132.647893ms)
 channel-tests-1  | ▶ inbound
-channel-tests-1  |   ✔ a text from a recorded chat becomes that User's inbound Message (108.280834ms)
-channel-tests-1  |   ✔ a redelivered update does not become a second Message (55.415549ms)
-channel-tests-1  |   ✔ a text from an unknown chat is answered with its own id and recorded nowhere (18.076564ms)
-channel-tests-1  |   ✔ an update without text is ignored (57.434373ms)
-channel-tests-1  | ✔ inbound (239.781331ms)
+channel-tests-1  |   ✔ a text from a recorded chat becomes that User's inbound Message (230.103695ms)
+channel-tests-1  |   ✔ a redelivered update does not become a second Message (118.614431ms)
+channel-tests-1  |   ✔ a text from an unknown chat is answered with its own id and recorded nowhere (26.004823ms)
+channel-tests-1  |   ✔ an update without text is ignored (182.875071ms)
+channel-tests-1  | ✔ inbound (558.318203ms)
 channel-tests-1  | ▶ sender metadata
-channel-tests-1  |   ✔ records a sender that has a username (42.354247ms)
-channel-tests-1  |   ✔ records a sender that has no username (40.588849ms)
-channel-tests-1  |   ✔ records a message Telegram named no sender for (33.081316ms)
-channel-tests-1  |   ✔ a redelivered update does not record the sender twice (57.017442ms)
-channel-tests-1  | ✔ sender metadata (173.504193ms)
+channel-tests-1  |   ✔ records a sender that has a username (301.415269ms)
+channel-tests-1  |   ✔ records a sender that has no username (30.877803ms)
+channel-tests-1  |   ✔ records a message Telegram named no sender for (45.482425ms)
+channel-tests-1  |   ✔ a redelivered update does not record the sender twice (48.882463ms)
+channel-tests-1  | ✔ sender metadata (427.036693ms)
 channel-tests-1  | ▶ outbound
-channel-tests-1  |   ✔ a Message to a User reaches their chat and leaves the outbox (45.290719ms)
-channel-tests-1  |   ✔ a Message to a User with no chat is refused and nothing is written (48.04169ms)
-channel-tests-1  |   ✔ a reply Telegram refuses for good is kept with the reason (119.878474ms)
-channel-tests-1  |   ✔ a transient failure leaves the reply for the next drain (42.224992ms)
-channel-tests-1  |   ✔ a long reply is split at 4096 characters (40.76598ms)
-channel-tests-1  |   ✔ a reply queued while stopped goes out at the next start (55.632933ms)
-channel-tests-1  | ✔ outbound (352.36313ms)
+channel-tests-1  |   ✔ a Message to a User reaches their chat and leaves the outbox (33.046175ms)
+channel-tests-1  |   ✔ a Message to a User with no chat is refused and nothing is written (22.352032ms)
+channel-tests-1  |   ✔ a reply Telegram refuses for good is kept with the reason (62.357554ms)
+channel-tests-1  |   ✔ a transient failure leaves the reply for the next drain (42.506619ms)
+channel-tests-1  |   ✔ a long reply is split at 4096 characters (33.76692ms)
+channel-tests-1  |   ✔ a reply queued while stopped goes out at the next start (38.469378ms)
+channel-tests-1  | ✔ outbound (233.197354ms)
 channel-tests-1  | ▶ polling
-channel-tests-1  |   ✔ survives a 409 from another poller and resumes when it is gone (118.763446ms)
-channel-tests-1  |   ✔ stop ends the poll and start resumes it (131.455613ms)
-channel-tests-1  | ✔ polling (250.439973ms)
+channel-tests-1  |   ✔ survives a 409 from another poller and resumes when it is gone (125.130035ms)
+channel-tests-1  |   ✔ stop ends the poll and start resumes it (207.687385ms)
+channel-tests-1  | ✔ polling (333.067237ms)
 channel-tests-1  | ▶ inbound resilience
-channel-tests-1  |   ✔ a Db failure during admit does not lose the update: it is redelivered and stored once (74.921676ms)
-channel-tests-1  | ✔ inbound resilience (75.083981ms)
-postgres-1       | 2026-10-07 05:52:09.337 UTC [68] LOG:  checkpoint starting: immediate force wait
-postgres-1       | 2026-10-07 05:52:09.379 UTC [68] LOG:  checkpoint complete: wrote 6 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.010 s, sync=0.008 s, total=0.042 s; sync files=5, longest=0.005 s, average=0.002 s; distance=4448 kB, estimate=4448 kB; lsn=0/1947940, redo lsn=0/19478E8
+channel-tests-1  |   ✔ a Db failure during admit does not lose the update: it is redelivered and stored once (171.178983ms)
+channel-tests-1  | ✔ inbound resilience (171.368424ms)
+postgres-1       | 2026-10-08 00:29:49.330 UTC [66] LOG:  checkpoint starting: immediate force wait
+postgres-1       | 2026-10-08 00:29:49.374 UTC [66] LOG:  checkpoint complete: wrote 6 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.015 s, sync=0.008 s, total=0.044 s; sync files=5, longest=0.005 s, average=0.002 s; distance=4448 kB, estimate=4448 kB; lsn=0/1947940, redo lsn=0/19478E8
 channel-tests-1  | ℹ tests 21
 channel-tests-1  | ℹ suites 6
 channel-tests-1  | ℹ pass 21
@@ -209,19 +209,19 @@ channel-tests-1  | ℹ fail 0
 channel-tests-1  | ℹ cancelled 0
 channel-tests-1  | ℹ skipped 0
 channel-tests-1  | ℹ todo 0
-channel-tests-1  | ℹ duration_ms 5532.560797
+channel-tests-1  | ℹ duration_ms 6027.174716
 [Kchannel-tests-1 exited with code 0
  Compose Stopping Aborting on container exit...
  Container concorde-channel-tests-channel-tests-1 Stopping 
  Container concorde-channel-tests-channel-tests-1 Stopped 
  Container concorde-channel-tests-postgres-1 Stopping 
-postgres-1       | 2026-10-07 05:52:10.005 UTC [1] LOG:  received fast shutdown request
-postgres-1       | 2026-10-07 05:52:10.010 UTC [1] LOG:  aborting any active transactions
-postgres-1       | 2026-10-07 05:52:10.015 UTC [1] LOG:  background worker "logical replication launcher" (PID 73) exited with exit code 1
-postgres-1       | 2026-10-07 05:52:10.020 UTC [68] LOG:  shutting down
-postgres-1       | 2026-10-07 05:52:10.026 UTC [68] LOG:  checkpoint starting: shutdown immediate
-postgres-1       | 2026-10-07 05:52:10.053 UTC [68] LOG:  checkpoint complete: wrote 1 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.006 s, sync=0.002 s, total=0.034 s; sync files=1, longest=0.002 s, average=0.002 s; distance=0 kB, estimate=4003 kB; lsn=0/1947A48, redo lsn=0/1947A48
-postgres-1       | 2026-10-07 05:52:10.060 UTC [1] LOG:  database system is shut down
+postgres-1       | 2026-10-08 00:29:49.890 UTC [1] LOG:  received fast shutdown request
+postgres-1       | 2026-10-08 00:29:49.900 UTC [1] LOG:  aborting any active transactions
+postgres-1       | 2026-10-08 00:29:49.904 UTC [1] LOG:  background worker "logical replication launcher" (PID 71) exited with exit code 1
+postgres-1       | 2026-10-08 00:29:49.904 UTC [66] LOG:  shutting down
+postgres-1       | 2026-10-08 00:29:49.914 UTC [66] LOG:  checkpoint starting: shutdown immediate
+postgres-1       | 2026-10-08 00:29:49.950 UTC [66] LOG:  checkpoint complete: wrote 1 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.004 s, sync=0.002 s, total=0.046 s; sync files=1, longest=0.002 s, average=0.002 s; distance=0 kB, estimate=4003 kB; lsn=0/1947A48, redo lsn=0/1947A48
+postgres-1       | 2026-10-08 00:29:49.955 UTC [1] LOG:  database system is shut down
  Container concorde-channel-tests-postgres-1 Stopped 
 [Kpostgres-1 exited with code 0
 === Run ended with exit code 0 ===

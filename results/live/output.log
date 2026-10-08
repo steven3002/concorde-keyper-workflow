@@ -1,0 +1,121 @@
+=== Concorde Keyper Workflow Live Run Capture ===
+Date: 2026-10-08
+Mode: LIVE
+Model Upstream: 0G Labs AI (0GM-1.0-35B-A3B) via relay reverse proxy
+Metrics Upstream: grafana.metrics.shutter.network via metrics-gate
+Telegram Bot: @stevenhertbot
+
+--- Compose Services ---
+NAME                                    IMAGE                                                                                         COMMAND                  SERVICE        CREATED         STATUS                   PORTS
+concordekeyperworkflow-agent-1          concordekeyperworkflow-agent                                                                  "docker-entrypoint.s…"   agent          8 minutes ago   Up 8 minutes             
+concordekeyperworkflow-gateway-1        concordekeyperworkflow-gateway                                                                "docker-entrypoint.s…"   gateway        8 minutes ago   Up 8 minutes (healthy)   
+concordekeyperworkflow-metrics-gate-1   nginx:1.30.5-alpine@sha256:0985e772fb9f729e6fa0980da05fca5d9c468e870eed43071545afa9d2e27d94   "/docker-entrypoint.…"   metrics-gate   8 minutes ago   Up 3 minutes             80/tcp
+concordekeyperworkflow-postgres-1       postgres:17@sha256:ae69c452f483507a6b99fb654cf93aad7fe156ffd2c56247707eef4e36d3c12b           "docker-entrypoint.s…"   postgres       8 minutes ago   Up 8 minutes (healthy)   5432/tcp
+concordekeyperworkflow-relay-1          nginx:1.30.5-alpine@sha256:0985e772fb9f729e6fa0980da05fca5d9c468e870eed43071545afa9d2e27d94   "/docker-entrypoint.…"   relay          8 minutes ago   Up 6 minutes             80/tcp
+
+
+--- Gateway Signal & Channel Logs ---
+gateway-1  | {"level":30,"time":1791418824599,"pid":1,"hostname":"af3b4a378394","update":593497114,"userId":"771f3712-72e2-42c0-b5b6-835454b6219e","msg":"a Telegram message became a Message"}
+gateway-1  | {"level":30,"time":1791418824606,"pid":1,"hostname":"af3b4a378394","signalId":"20c3a71d-246d-4faf-8d72-fe65e0e21d52","kind":"message.received","msg":"Signal claimed"}
+gateway-1  | {"level":30,"time":1791418824611,"pid":1,"hostname":"af3b4a378394","runId":"bebf6409-2e71-49b7-bfc6-df40e830d62b","signalId":"20c3a71d-246d-4faf-8d72-fe65e0e21d52","session":"user_771f3712-72e2-42c0-b5b6-835454b6219e","msg":"Run started"}
+gateway-1  | {"level":50,"time":1791418844638,"pid":1,"hostname":"af3b4a378394","runId":"bebf6409-2e71-49b7-bfc6-df40e830d62b","signalId":"20c3a71d-246d-4faf-8d72-fe65e0e21d52","session":"user_771f3712-72e2-42c0-b5b6-835454b6219e","err":"Session user_771f3712-72e2-42c0-b5b6-835454b6219e settled with stopReason \"error\" and reported no failure of its own: 502 <html>\r\n<head><title>502 Bad Gateway</title></head>\r\n<body>\r\n<center><h1>502 Bad Gateway</h1></center>\r\n<hr><center>nginx/1.30.5</center>\r\n</body>\r\n</html>\r\n","msg":"Run failed"}
+gateway-1  | {"level":30,"time":1791418844666,"pid":1,"hostname":"af3b4a378394","signalId":"20c3a71d-246d-4faf-8d72-fe65e0e21d52","kind":"message.received","state":"failed","msg":"Signal finished"}
+gateway-1  | {"level":30,"time":1791418845013,"pid":1,"hostname":"af3b4a378394","message":"e6120eb5-a61b-442b-886a-cac65db6b6a6","userId":"771f3712-72e2-42c0-b5b6-835454b6219e","msg":"a Message reached Telegram"}
+gateway-1  | {"level":30,"time":1791419017222,"pid":1,"hostname":"af3b4a378394","update":593497115,"userId":"771f3712-72e2-42c0-b5b6-835454b6219e","msg":"a Telegram message became a Message"}
+gateway-1  | {"level":30,"time":1791419017228,"pid":1,"hostname":"af3b4a378394","signalId":"3bd154c6-0b66-48a0-a233-a8c105c2fe03","kind":"message.received","msg":"Signal claimed"}
+gateway-1  | {"level":30,"time":1791419017231,"pid":1,"hostname":"af3b4a378394","runId":"f78c8ed9-ccf4-40f8-8083-571f34538600","signalId":"3bd154c6-0b66-48a0-a233-a8c105c2fe03","session":"user_771f3712-72e2-42c0-b5b6-835454b6219e","msg":"Run started"}
+gateway-1  | {"level":30,"time":1791419034480,"pid":1,"hostname":"af3b4a378394","runId":"f78c8ed9-ccf4-40f8-8083-571f34538600","signalId":"3bd154c6-0b66-48a0-a233-a8c105c2fe03","session":"user_771f3712-72e2-42c0-b5b6-835454b6219e","msg":"Run finished"}
+gateway-1  | {"level":30,"time":1791419034485,"pid":1,"hostname":"af3b4a378394","signalId":"3bd154c6-0b66-48a0-a233-a8c105c2fe03","kind":"message.received","state":"done","msg":"Signal finished"}
+gateway-1  | {"level":30,"time":1791419257367,"pid":1,"hostname":"af3b4a378394","update":593497116,"userId":"771f3712-72e2-42c0-b5b6-835454b6219e","msg":"a Telegram message became a Message"}
+gateway-1  | {"level":30,"time":1791419257372,"pid":1,"hostname":"af3b4a378394","signalId":"50d66340-d2fa-4a59-a7fe-423b02518028","kind":"message.received","msg":"Signal claimed"}
+gateway-1  | {"level":30,"time":1791419257377,"pid":1,"hostname":"af3b4a378394","runId":"f08174f3-1de0-46a1-a374-e5218210987c","signalId":"50d66340-d2fa-4a59-a7fe-423b02518028","session":"user_771f3712-72e2-42c0-b5b6-835454b6219e","msg":"Run started"}
+gateway-1  | {"level":30,"time":1791419279616,"pid":1,"hostname":"af3b4a378394","message":"8aedc89d-7e21-424a-a34d-f372c597a6a4","userId":"771f3712-72e2-42c0-b5b6-835454b6219e","msg":"a Message reached Telegram"}
+gateway-1  | {"level":30,"time":1791419281743,"pid":1,"hostname":"af3b4a378394","runId":"f08174f3-1de0-46a1-a374-e5218210987c","signalId":"50d66340-d2fa-4a59-a7fe-423b02518028","session":"user_771f3712-72e2-42c0-b5b6-835454b6219e","msg":"Run finished"}
+gateway-1  | {"level":30,"time":1791419281747,"pid":1,"hostname":"af3b4a378394","signalId":"50d66340-d2fa-4a59-a7fe-423b02518028","kind":"message.received","state":"done","msg":"Signal finished"}
+
+
+--- Relay Upstream Logs ---
+relay-1  | 2026/10/08 00:22:34 [notice] 1#1: built by gcc 15.2.0 (Alpine 15.2.0) 
+relay-1  | 2026/10/08 00:22:34 [notice] 1#1: OS: Linux 6.17.0-1022-azure
+relay-1  | 2026/10/08 00:22:34 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1024:524288
+relay-1  | 2026/10/08 00:22:34 [notice] 1#1: start worker processes
+relay-1  | 2026/10/08 00:22:34 [notice] 1#1: start worker process 36
+relay-1  | 2026/10/08 00:22:34 [notice] 1#1: start worker process 37
+relay-1  | 172.20.0.1 - - [08/Oct/2026:00:23:39 +0000] "POST /v1/chat/completions HTTP/1.1" 200 10027 "-" "pi (linux 6.17.0-1022-azure; x64)" "-"
+relay-1  | 172.20.0.1 - - [08/Oct/2026:00:23:41 +0000] "POST /v1/chat/completions HTTP/1.1" 200 6058 "-" "pi (linux 6.17.0-1022-azure; x64)" "-"
+relay-1  | 2026/10/08 00:23:41 [warn] 36#36: *1 a client request body is buffered to a temporary file /var/cache/nginx/client_temp/0000000001, client: 172.20.0.1, server: _, request: "POST /v1/chat/completions HTTP/1.1", host: "relay:8080"
+relay-1  | 172.20.0.1 - - [08/Oct/2026:00:23:42 +0000] "POST /v1/chat/completions HTTP/1.1" 200 6613 "-" "pi (linux 6.17.0-1022-azure; x64)" "-"
+relay-1  | 2026/10/08 00:23:42 [warn] 36#36: *1 a client request body is buffered to a temporary file /var/cache/nginx/client_temp/0000000002, client: 172.20.0.1, server: _, request: "POST /v1/chat/completions HTTP/1.1", host: "relay:8080"
+relay-1  | 172.20.0.1 - - [08/Oct/2026:00:23:44 +0000] "POST /v1/chat/completions HTTP/1.1" 200 9046 "-" "pi (linux 6.17.0-1022-azure; x64)" "-"
+relay-1  | 2026/10/08 00:23:44 [warn] 36#36: *1 a client request body is buffered to a temporary file /var/cache/nginx/client_temp/0000000003, client: 172.20.0.1, server: _, request: "POST /v1/chat/completions HTTP/1.1", host: "relay:8080"
+relay-1  | 172.20.0.1 - - [08/Oct/2026:00:23:47 +0000] "POST /v1/chat/completions HTTP/1.1" 200 22167 "-" "pi (linux 6.17.0-1022-azure; x64)" "-"
+relay-1  | 2026/10/08 00:23:52 [warn] 37#37: *7 a client request body is buffered to a temporary file /var/cache/nginx/client_temp/0000000004, client: 172.20.0.1, server: _, request: "POST /v1/chat/completions HTTP/1.1", host: "relay:8080"
+relay-1  | 172.20.0.1 - - [08/Oct/2026:00:23:54 +0000] "POST /v1/chat/completions HTTP/1.1" 200 10388 "-" "pi (linux 6.17.0-1022-azure; x64)" "-"
+relay-1  | 2026/10/08 00:27:37 [warn] 36#36: *9 a client request body is buffered to a temporary file /var/cache/nginx/client_temp/0000000005, client: 172.20.0.1, server: _, request: "POST /v1/chat/completions HTTP/1.1", host: "relay:8080"
+relay-1  | 172.20.0.1 - - [08/Oct/2026:00:27:40 +0000] "POST /v1/chat/completions HTTP/1.1" 200 7246 "-" "pi (linux 6.17.0-1022-azure; x64)" "-"
+relay-1  | 2026/10/08 00:27:40 [warn] 36#36: *9 a client request body is buffered to a temporary file /var/cache/nginx/client_temp/0000000006, client: 172.20.0.1, server: _, request: "POST /v1/chat/completions HTTP/1.1", host: "relay:8080"
+relay-1  | 172.20.0.1 - - [08/Oct/2026:00:27:47 +0000] "POST /v1/chat/completions HTTP/1.1" 200 80862 "-" "pi (linux 6.17.0-1022-azure; x64)" "-"
+relay-1  | 2026/10/08 00:27:47 [warn] 36#36: *9 a client request body is buffered to a temporary file /var/cache/nginx/client_temp/0000000007, client: 172.20.0.1, server: _, request: "POST /v1/chat/completions HTTP/1.1", host: "relay:8080"
+relay-1  | 172.20.0.1 - - [08/Oct/2026:00:27:50 +0000] "POST /v1/chat/completions HTTP/1.1" 200 5437 "-" "pi (linux 6.17.0-1022-azure; x64)" "-"
+relay-1  | 2026/10/08 00:27:50 [warn] 36#36: *9 a client request body is buffered to a temporary file /var/cache/nginx/client_temp/0000000008, client: 172.20.0.1, server: _, request: "POST /v1/chat/completions HTTP/1.1", host: "relay:8080"
+relay-1  | 172.20.0.1 - - [08/Oct/2026:00:27:52 +0000] "POST /v1/chat/completions HTTP/1.1" 200 5410 "-" "pi (linux 6.17.0-1022-azure; x64)" "-"
+relay-1  | 2026/10/08 00:27:52 [warn] 36#36: *9 a client request body is buffered to a temporary file /var/cache/nginx/client_temp/0000000009, client: 172.20.0.1, server: _, request: "POST /v1/chat/completions HTTP/1.1", host: "relay:8080"
+relay-1  | 172.20.0.1 - - [08/Oct/2026:00:27:55 +0000] "POST /v1/chat/completions HTTP/1.1" 200 5789 "-" "pi (linux 6.17.0-1022-azure; x64)" "-"
+relay-1  | 2026/10/08 00:27:55 [warn] 36#36: *9 a client request body is buffered to a temporary file /var/cache/nginx/client_temp/0000000010, client: 172.20.0.1, server: _, request: "POST /v1/chat/completions HTTP/1.1", host: "relay:8080"
+relay-1  | 172.20.0.1 - - [08/Oct/2026:00:27:59 +0000] "POST /v1/chat/completions HTTP/1.1" 200 20119 "-" "pi (linux 6.17.0-1022-azure; x64)" "-"
+relay-1  | 2026/10/08 00:27:59 [warn] 36#36: *9 a client request body is buffered to a temporary file /var/cache/nginx/client_temp/0000000011, client: 172.20.0.1, server: _, request: "POST /v1/chat/completions HTTP/1.1", host: "relay:8080"
+relay-1  | 172.20.0.1 - - [08/Oct/2026:00:28:01 +0000] "POST /v1/chat/completions HTTP/1.1" 200 20784 "-" "pi (linux 6.17.0-1022-azure; x64)" "-"
+
+
+--- Metrics Gate Logs ---
+metrics-gate-1  | 2026/10/08 00:25:31 [notice] 36#36: exit
+metrics-gate-1  | 2026/10/08 00:25:31 [notice] 1#1: signal 17 (SIGCHLD) received from 37
+metrics-gate-1  | 2026/10/08 00:25:31 [notice] 1#1: worker process 37 exited with code 0
+metrics-gate-1  | 2026/10/08 00:25:31 [notice] 1#1: signal 29 (SIGIO) received
+metrics-gate-1  | 2026/10/08 00:25:31 [notice] 1#1: signal 17 (SIGCHLD) received from 36
+metrics-gate-1  | 2026/10/08 00:25:31 [notice] 1#1: worker process 36 exited with code 0
+metrics-gate-1  | 2026/10/08 00:25:31 [notice] 1#1: exit
+metrics-gate-1  | /docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration
+metrics-gate-1  | /docker-entrypoint.sh: Looking for shell scripts in /docker-entrypoint.d/
+metrics-gate-1  | /docker-entrypoint.sh: Launching /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh
+metrics-gate-1  | 10-listen-on-ipv6-by-default.sh: info: Getting the checksum of /etc/nginx/conf.d/default.conf
+metrics-gate-1  | 10-listen-on-ipv6-by-default.sh: info: /etc/nginx/conf.d/default.conf differs from the packaged version
+metrics-gate-1  | /docker-entrypoint.sh: Sourcing /docker-entrypoint.d/15-local-resolvers.envsh
+metrics-gate-1  | /docker-entrypoint.sh: Launching /docker-entrypoint.d/20-envsubst-on-templates.sh
+metrics-gate-1  | 20-envsubst-on-templates.sh: Running envsubst on /etc/nginx/templates/default.conf.template to /etc/nginx/conf.d/default.conf
+metrics-gate-1  | /docker-entrypoint.sh: Launching /docker-entrypoint.d/30-tune-worker-processes.sh
+metrics-gate-1  | /docker-entrypoint.sh: Configuration complete; ready for start up
+metrics-gate-1  | 2026/10/08 00:25:31 [notice] 1#1: using the "epoll" event method
+metrics-gate-1  | 2026/10/08 00:25:31 [notice] 1#1: nginx/1.30.5
+metrics-gate-1  | 2026/10/08 00:25:31 [notice] 1#1: built by gcc 15.2.0 (Alpine 15.2.0) 
+metrics-gate-1  | 2026/10/08 00:25:31 [notice] 1#1: OS: Linux 6.17.0-1022-azure
+metrics-gate-1  | 2026/10/08 00:25:31 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1024:524288
+metrics-gate-1  | 2026/10/08 00:25:31 [notice] 1#1: start worker processes
+metrics-gate-1  | 2026/10/08 00:25:31 [notice] 1#1: start worker process 35
+metrics-gate-1  | 2026/10/08 00:25:31 [notice] 1#1: start worker process 36
+metrics-gate-1  | 172.20.0.1 - - [08/Oct/2026:00:25:36 +0000] "POST /api/public/dashboards/2b52906b091a445989638922fbe69e5e/panels/5/query HTTP/1.1" 200 22426 "-" "curl/8.22.0" "-"
+metrics-gate-1  | 172.20.0.1 - - [08/Oct/2026:00:27:40 +0000] "POST /api/public/dashboards/2b52906b091a445989638922fbe69e5e/panels/5/query HTTP/1.1" 200 22426 "-" "curl/8.22.0" "-"
+metrics-gate-1  | 172.20.0.1 - - [08/Oct/2026:00:27:47 +0000] "POST /api/public/dashboards/2b52906b091a445989638922fbe69e5e/panels/5/query HTTP/1.1" 200 7906 "-" "curl/8.22.0" "-"
+metrics-gate-1  | 172.20.0.1 - - [08/Oct/2026:00:27:50 +0000] "POST /api/public/dashboards/2b52906b091a445989638922fbe69e5e/panels/5/query HTTP/1.1" 200 7906 "-" "curl/8.22.0" "-"
+metrics-gate-1  | 172.20.0.1 - - [08/Oct/2026:00:27:55 +0000] "POST /api/public/dashboards/2b52906b091a445989638922fbe69e5e/panels/5/query HTTP/1.1" 200 22426 "-" "curl/8.22.0" "-"
+
+
+--- Messenger Database Inbound & Outbound Records ---
+                  id                  |               user_id                | direction |                                                     text                                                      |          created_at           
+--------------------------------------+--------------------------------------+-----------+---------------------------------------------------------------------------------------------------------------+-------------------------------
+ 57074797-9429-492f-b58a-14d543c6540f | 771f3712-72e2-42c0-b5b6-835454b6219e | inbound   | How many keypers are online now?                                                                              | 2026-10-08 00:27:37.362445+00
+ 8aedc89d-7e21-424a-a34d-f372c597a6a4 | 771f3712-72e2-42c0-b5b6-835454b6219e | outbound  | There are **30 out of 39 keypers** currently online.                                                         +| 2026-10-08 00:27:59.277999+00
+                                      |                                      |           |                                                                                                              +| 
+                                      |                                      |           | **Breakdown by network:**                                                                                    +| 
+                                      |                                      |           | - Mainnet: 20 online, 9 offline                                                                              +| 
+                                      |                                      |           | - Chiado: 10 online, 0 offline                                                                               +| 
+                                      |                                      |           |                                                                                                              +| 
+                                      |                                      |           | **9 offline keypers:**                                                                                       +| 
+                                      |                                      |           | - kpr-gnosh-initial-keyper-01 (mainnet)                                                                      +| 
+                                      |                                      |           | - kpr-shutter_api_gnosis_1002_keyper_1 through _5 (mainnet, 5 keypers)                                       +| 
+                                      |                                      |           | - set1-keyper1, set1-keyper2, set1-keyper3 (mainnet)                                                         +| 
+                                      |                                      |           |                                                                                                              +| 
+                                      |                                      |           | All Chiado keypers are online. The mainnet 1002 keyper set (first generation) and set1 are currently offline. | 
+(2 rows)
+
+
